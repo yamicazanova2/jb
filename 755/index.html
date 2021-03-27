@@ -1,364 +1,141 @@
-<html manifest="offlinexmb.cache">
-	<style>
-		.button {
-		  background-color: #6c757d;  
-		  border: 2px solid black;
-		  border-radius: 10px;
-		  color: white;
-		  text-decoration: none;
-		  width: 200px;
-          height: 40px;
-		  display:inline-table;
-		  font-family: system-ui;
-		  text-align: center;
-		}
+﻿<html manifest="offlinexmb.cache">
 
-		.button:focus,
-		.button:hover {
-		  color: White;
-		  box-shadow: 0 5px 50px 0 white;
-          border-radius: 10px;
-		}
-		.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  <style>
+body{color: white; background-image:url(1.jpg); background-attachment:fixed; background-size:100%; background-repeat:no-repeat;}
+input{width:25px;height:25px;background-color: transparent;}
+    button {
+                background-color: white;
+                border: 2px solid black;
+                border-radius: 10px;
+                text-align: center;
+    }
+    button:hover {
+                box-shadow: 0 5px 50px 0 white;
+                color: white;
+                border-radius: 10px;
+    }</style>
+<head>
+<meta charset="utf-8">
+<title>PS4 Jailbreak for 7.55 FW by YAMICAZANOVA</title>
+<link rel="stylesheet prefetch" href="Style.css">
+    <script>
+        document.cookie = 'kex=1';
+    </script>
+<script>
+function DLProgress(e){
+	parent.ScrOverlay.style.display="block";
+	Percent=(Math.round(e.loaded / e.total * 100));
+	parent.cacheUPDtxt.innerHTML="Installing Offline Cache: " + Percent + "%";
+	parent.CacheBar.style.width=Percent + '%';
 }
- .content {
-  width:80%;
-  height:15%;
-  margin-left:7.5%;
-  background:rgba(0,0,0,0.5);
-  color:white;
-  margin-top:1%;
-  font-size:25px;
-  text-align:center;
-  border-radius:30px;
-  padding:20px;
-  line-height:12px;
- }
- .title {
-  font-size:40px;
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-weight:bolder;
-  margin-bottom:10px;
- }
- .yellow {
-  color:yellow;
- }
- .hue {
-  color:yellow;
-  padding:10px;
-  border-radius:10px;
-  animation:hue 5s linear infinite;
-  -webkit-animation: hue 5s linear infinite;
-  box-shadow: 0px 0px 50px yellow;
-  color:white;
-  background:rgba(255,255,0,0.4);
- }
- .hue:hover{
-  color:yellow;
-  background:transparent;
- }
- @keyframes hue{
- 0%{
- filter:hue-rotate(0deg);
- -webkit-filter:hue-rotate(0deg);
- }
- 10%{
- box-shadow: 0px 1px 50px yellow;
- }
- 20%{
- box-shadow: 1px 1px 50px yellow;
- }
- 30%{
- box-shadow: 1px 0px 50px yellow;
- }
- 40%{
-  box-shadow: 1px -1px 50px yellow;
- }
- 50%{
- box-shadow: 0px -1px 50px yellow;
- }
- 60%{
- box-shadow: -1px -1px 50px yellow;
- }
- 70%{
- box-shadow: -1px 0px 50px yellow;
- }
- 80%{
- box-shadow: -1px 1px 50px yellow;
- }
- 90%{
- box-shadow: 0px 1px 50px yellow;
- }
- 100%{
- filter:hue-rotate(360deg);
- -webkit-filter:hue-rotate(360deg);
- }
- }
- .text {
-  padding-bottom:50px;
- }
-  .back {
-   font-size:25px;
-   margin-top:10px;
-   display:block;
-   line-height:55px;
-   width:20%;
-   text-decoration:none;
-   height:50px;
-   background:white;
-   color:black;
-   border-radius:15px;
+function DisplayCacheProgress(){
+	setTimeout(function(){parent.cacheUPDtxt.innerHTML="Cache Installed Successfully.Turn off Internet & Reopen the Browser!!";},1000);}
+	window.applicationCache.addEventListener("progress",DLProgress,false);
+	window.applicationCache.oncached=function(e){DisplayCacheProgress();};
+	window.applicationCache.onupdateready=function(e){DisplayCacheProgress();};
+	window.applicationCache.onerror=function(e){parent.cacheUPDtxt.innerHTML="Error Installing Cache";
+};
+</script>
+<script>
+    function showdate() {
+  var dt = new Date();
+    Hour= dt.getHours();
+  Minute= dt.getMinutes();
+     Day=dt.getDate();
+   Month=dt.getMonth()+1;
+   Year=dt.getFullYear();
+if (Minute < 10) { Minute = "0" + Minute; };
+if (Hour < 10) { Hour = "0" + Hour; };
+document.getElementById("date").innerHTML = (Day+"/"+Month+"/"+Year);
+document.getElementById("clock").innerHTML = (Hour+":"+Minute);
   }
-  .back:hover{
-   border:2px solid white;
-   background:transparent;
-   box-sizing:border-box;
-   color:white;
+  
+  setInterval(showdate,0);
+</script>
+</head>
+<body class="bg-darker">
+<div id="container"  >
+<div id=ScrOverlay class=cacheUPDbg><pre id=cacheUPDtxt class=cacheUPD></pre>
+<div id=CacheProgress><div id=CacheBar></div></div></div>
+<hr><span id="date" ></span><span id="clock" ></span><h1 style='font-size:25px;text-align:center;color:white;'>PS4 Jailbreak for 7.55 FW by YAMICAZANOVA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+<hr>
+<div class="about" ><a href="about.html" >About Us</a></div>
+<div id="myModal" class="modal">
+  <!-- MODAL CONTENTS -->
+  <div class="modal-content">
+  <span class="close"></span>
+    <div class="modal-body">
+
+    <br><br><br>
+    </div>
+  </div>
+</div>
+<script>
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+span.onclick = function() {
+  modal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
-/* Modal Content */
-.modal-content {
-  font-family: BFARNAZ;
-  font-size: 18px;
-  position: relative;
-  background-color: #dddddd;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 50%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
 }
-.titlehead {
-		  background-color: #343a40;  
-		  border-radius: 5px;
-		  color: white;
-		  padding: .5em;
-		  text-decoration: none;
-		  text-align: center;
-		  margin-top: -10px;
-		  margin-bottom: -10px;
-		  font-family: system-ui;
-}
+</script>
+<div class="theme" ><a href="theme.html" >Themes</a></div>
+<h1 id=msgs3 style='font-size:25px;text-align:center;color:red;'>WARNING: CURRENT EXPLOIT AND WEB KIT ARE NOT STABLE YET</h1>
 
-.titlehead:focus,
-		.titlehead:hover {
-		  box-shadow: 0 5px 50px 0 white;
-		  color: White;
-		}
+<h1 id=msgs4 style='font-size:25px;text-align:center;color:white;'>YOU WILL RECEIVE SOME: THERE'S NOT ENOUGHT MEMORY ALERTS OR MIRA WILL CRASH</h1>
 
-		.bg {
-		  /* The image used */
-		  background-color:#343a40;
-		  font-family: system-ui;
-		  /* Center and scale the image nicely */
-		  background-position: center;
-		  background-repeat: no-repeat;
-		  background-size: cover;
-		}
+<h1 id=msgs5 style='font-size:25px;text-align:center;color:white;'>KEEP TRYING UNTIL YOU GET YOUR PS4 JAILBREAK DONE.</h1>
+<hr>
+<br>
+<h1 id=msgs2 style='font-size:25px;text-align:center;color:white;'>Status</h1>
+<div style="text-align:center" id="MyItems">
+    <br>
+    <a href="7.5XV1.3/payload755.html#f=7.5XV1.3/mira755/mira2.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Old Mira 755 Launcher'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> MIRA OLD </B></button></a>
+    <a href="7.5XV1.3/payload755.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Old Bin Loader Netcat on Port 9021'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> NETCAT OLD </B></button></a>
+    <a href="payload755.html#f=mira755/mira2.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='New Mira 755 Launcher'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> MIRA NEW </B></button></a>
+    <a href="payload755.html#f=ps4-hen-vtx-755.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='GOLDHEN by SISTRo'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> GOLDHEN </B></button></a>
+    <a href="payload755.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='New Bin Loader Netcat on Port 9021'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> NETCAT NEW </B></button></a>
+    <br>
+    <h1 style='font-size:30px;text-align:center;text-shadow: 4px 4px 4px black;color:#4863A0'>PAYLOADS</h1>
+    <br>
+    <a href="binloader755.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Loads a bin file sent to the PS4 IP address on port 9020'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> BIN LOADER </B></button></a>
+    <a href="payload755.html#f=payloads/ftp.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='A full access FTP server for the PS4'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> FTP </B></button></a>
+    <a href="payload755.html#f=payloads/dumper.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Dump Games to a USB drive to be able to create fpkg files'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Dumper Game </B></button></a>
+    <a href="payload755.html#f=payloads/kernel-clock.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Change Kernel Clock'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Kernel Clock </B></button></a>
+    <a href="payload755.html#f=payloads/app2usb.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Move installed games to an external USB drive'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> App2USB </B></button></a>
+    <br><br>
+    <a href="payload755.html#f=payloads/backup.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Create a backup of important database files ans User Data'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> DB Backup </B></button></a>
+    <a href="payload755.html#f=payloads/restore.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Restore a backup of the database files and User Data'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> DB Restore </B></button></a>
+    <a href="payload755.html#f=payloads/disable-updates.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Creates dummy files in the PS4 update folder'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B>Disable Update</B></button></a>
+    <a href="payload755.html#f=payloads/enable-updates.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Deletes dummy files in the PS4 update folder'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B>Enable Update</B></button></a>
+    <a href="payload755.html#f=payloads/enable-browser.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Enable Browser'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Enable Browser </B></button></a>
+    <br><br>
+    <a href="payload755.html#f=payloads/disable-aslr.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Disable ASLR'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Disable ASLR </B></button></a>
+    <a href="payload755.html#f=payloads/fan-threshold.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Fan Control'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Fan Control </B></button></a>
+    <a href="payload755.html#f=payloads/kernel-dumper.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Dump Kernel'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Dump Kernel </B></button></a>
+    <a href="payload755.html#f=payloads/module-dumper.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Dump Kernel Modules'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Dump Modules </B></button></a>
+    <a href="payload755.html#f=payloads/rif-renamer.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Rename Rif Files'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> Rename Rif </B></button></a>
+    <br><br>
+    <a href="payload755.html#f=payloads/ps4debug755.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='PS4 Debug'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> PS4 Debug </B></button></a>
+    <a href="payload755.html#f=payloads/webrte755.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='PS4 Trainer by LightningMods'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> WebRTE </B></button></a>
+    <a href="payload755.html#f=payloads/todex.js"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='unlocks some debug features available on testkit'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> ToDex </B></button></a>
 
-		#myProgress {
-		  border: 5px solid #FFFFFF;
-		  border-radius: 5px;
-		  background-color: #ddd;
-		  height: 45px;
-		  position: absolute;
-		  top:0;
-		  bottom: 250;
-		  left: 150;
-		  right: 150;
-		  margin: auto;
-		}
-       #Progress {
-		  color: yellow;
-		}
-
-		#myBar {
-		  width: 0%;
-		  height: 40px;
-		  background-color: #4CAF50;
-		  text-align: center;
-		  line-height: 30px;
-		  color: white;
-		  font-size: 35px;
-		  padding-top: 5px;
-		}
-.pointer {cursor: pointer;}
-	</style>
-	<head><meta http-equiv="Content-Type" content="text/html">
-		<title>yamicazanova Host for PS4 7.5X FW</title>
-	</head>
-	<body onload="go()" class="bg">
-		<script>
-			var fw = (navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple'))).replace('.', '');;
-			if(window.applicationCache.status==2){localStorage.is755Cached=true;}
-			window.applicationCache.ondownloading=function(){document.getElementById("progress").innerHTML="Page Caching Started!!";localStorage.is755Cached=false;};
-			window.applicationCache.onprogress=function(a){document.getElementById("myBar").style.width=(Math.round(100*(a.loaded/a.total)))+"%";document.getElementById("myBar").innerHTML=(Math.round(100*(a.loaded/a.total)))+"%";};
-			window.applicationCache.oncached=function(){document.getElementById("progress").innerHTML="Page Cached Successfully!!";localStorage.is755Cached=true;setTimeout(function(){document.getElementById("progress").innerHTML="Turn Off the Internet & Reopen the Page to Run the Exploit!!"; }, 1500);};
-		</script>
-		<script>
-			var width = 0;
-			function frame1() {
-				var elem = document.getElementById("myBar");
-				var i=0;
-				var id = setInterval(fra, 10);
-				function fra(){
-				  if(i<10 && width<100){
-					  width++;
-					  elem.style.width = width + "%";
-					  elem.innerHTML = width  + "%";
-				  } i++;
-				}
-			}
-		</script>
-		<script>
-		function print(){}
-
-		var scriptCode = '';
-
-		function preloadScripts(lst)
-		{	
-			scriptCode = '';
-			for(var i = 0; i < lst.length; i++)
-			{
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', lst[i], false);
-				xhr.send('');
-				scriptCode += xhr.responseText + '\n';
-			}
-		}
-		
-		function done(){
-			setTimeout(function(){document.getElementById("progress").innerHTML="yamicazanova Host for PS4 7.5X FW";}, 1000);
-			document.getElementById("myProgress").remove();
-			document.getElementById('load').innerHTML='<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td align="center" id="jailbreak" colspan="5" >'+
-			'<a href="#" id="mira75X" class="button pointer" onMouseOver="progress.innerHTML=\'Mira by AlAzif for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'mira75X\'); return false" style="font-size:25px;text-align:center;color:white">Mira</a>&nbsp;'+
-			'<a href="#" id="mirab" class="button pointer" onMouseOver="progress.innerHTML=\'Mira2b Spoof to 9.99 & fixed Rest Mode by yamicazanova, Fix for All PS4 7.5X Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'mirab\'); return false" style="font-size:25px;text-align:center;color:white">Mira2b</a>&nbsp;'+
-			'<a href="#" id="goldhen" class="button pointer" onMouseOver="progress.innerHTML=\'GoldHen by Sistro for All PS4 7.5X Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'goldhen\'); return false" style="font-size:25px;text-align:center;color:white">GoldHen</a>&nbsp;'+
-			'<a href="#" id="binloader" class="button pointer" onMouseOver="progress.innerHTML=\'Binloader for PS4 7.5X Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'binloader\'); return false" style="font-size:25px;text-align:center;color:white">Bin Loader</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td colspan="5" align="center"><hr><br></td>'+
-			'</tr>'+
-			'<tr>'+
-			'<td align="center" colspan="5"><a href="#" id="app2usb" class="button pointer" onMouseOver="progress.innerHTML=\'App to USB for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'app2usb\'); return false" style="font-size:25px;text-align:center;color:white">App2USB</a>&nbsp;'+
-			'<a href="#" id="disableupdates" class="button pointer" onMouseOver="progress.innerHTML=\'disable updates for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'disableupdates\'); return false" style="font-size:25px;text-align:center;color:white">Disable.Updates</a>&nbsp;'+
-			'<a href="#" id="enableupdates" class="button pointer" onMouseOver="progress.innerHTML=\'enable updates for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'enableupdates\'); return false" style="font-size:25px;text-align:center;color:white">Enable.Updates</a>&nbsp;'+
-			'<a href="#" id="dumper" class="button pointer" onMouseOver="progress.innerHTML=\'Games Dumper for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'dumper\'); return false" style="font-size:25px;text-align:center;color:white">Dumper</a>&nbsp;'+
-			'<a href="#" id="renamer" class="button pointer" onMouseOver="progress.innerHTML=\'rif Renamer for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'renamer\'); return false" style="font-size:25px;text-align:center;color:white">rif Renamer</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td align="center" colspan="2">'+
-			'<a href="#" id="backup" class="button pointer" onMouseOver="progress.innerHTML=\'Backup of data for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'backup\'); return false" style="font-size:25px;text-align:center;color:white">BackUp</a>&nbsp;'+
-			'<a href="#" id="restore" class="button pointer" onMouseOver="progress.innerHTML=\'Restore data for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'restore\'); return false" style="font-size:25px;text-align:center;color:white">Restore</a>&nbsp;'+
-			'<a href="#" id="module" class="button pointer" onMouseOver="progress.innerHTML=\'Module Dumper for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'module\'); return false" style="font-size:25px;text-align:center;color:white">Module Dumper</a>&nbsp;'+
-			'<a href="#" id="ftp" class="button pointer" onMouseOver="progress.innerHTML=\'FTP server for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'ftp\'); return false" style="font-size:25px;text-align:center;color:white">FTP</a>&nbsp;'+
-			'<a href="#" id="todex" class="button pointer" onMouseOver="progress.innerHTML=\'ToDEX for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'todex\'); return false" style="font-size:25px;text-align:center;color:white">To-DEX</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td align="center" colspan="2">'+
-			'<a href="#" id="disableaslr" class="button pointer" onMouseOver="progress.innerHTML=\'Disable Aslr for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'disableaslr\'); return false" style="font-size:25px;text-align:center;color:white">disable aslr</a>&nbsp;'+
-			'<a href="#" id="enablebrowser" class="button pointer" onMouseOver="progress.innerHTML=\'Enable Browser for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'enablebrowser\'); return false" style="font-size:25px;text-align:center;color:white">enable Browser</a>&nbsp;'+
-			'<a href="#" id="historyblocker" class="button pointer" onMouseOver="progress.innerHTML=\'History Blocker for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'historyblocker\'); return false" style="font-size:25px;text-align:center;color:white">History Blocker</a>&nbsp;'+
-			'<a href="#" id="kernelclock" class="button pointer" onMouseOver="progress.innerHTML=\'Change Kernel Clock for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'kernelclock\'); return false" style="font-size:25px;text-align:center;color:white">Kernel Clock</a>&nbsp;'+
-			'<a href="#" id="kerneldumper" class="button pointer" onMouseOver="progress.innerHTML=\'Kernel Dumper for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'kerneldumper\'); return false" style="font-size:25px;text-align:center;color:white">Kernel Dumper</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td align="center" colspan="2">'+
-			'<a href="#" id="fancontrol" class="button pointer" onMouseOver="progress.innerHTML=\'change speed FAN for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'fancontrol\'); return false" style="font-size:25px;text-align:center;color:white">Fan Control</a>&nbsp;'+
-			'<a href="#" id="webrte" class="button pointer" onMouseOver="progress.innerHTML=\'WebRTE for PS4 7.55 Fw\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'webrte\'); return false" style="font-size:25px;text-align:center;color:white">WebRTE</a>&nbsp;'+
-			'<a href="#" id="gtava1" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.00 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtava1\'); return false" style="font-size:25px;text-align:center;color:white">GTAV A1</a>&nbsp;'+
-			'<a href="#" id="gtava2" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.27 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtava2\'); return false" style="font-size:25px;text-align:center;color:white">GTAV A2</a>&nbsp;'+
-			'<a href="#" id="gtava3" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.32 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtava3\'); return false" style="font-size:25px;text-align:center;color:white">GTAV A3</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td align="center" colspan="2">'+
-			'<a href="#" id="gtavl" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV Lamance 1.32 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtavl\'); return false" style="font-size:25px;text-align:center;color:white">GTAV L</a>&nbsp;'+
-			'<a href="#" id="gtavn1" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.00 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtavn1\'); return false" style="font-size:25px;text-align:center;color:white">GTAV N1</a>&nbsp;'+
-			'<a href="#" id="gtavn2" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.27 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtavn2\'); return false" style="font-size:25px;text-align:center;color:white">GTAV N2</a>&nbsp;'+
-			'<a href="#" id="gtavn3" class="button pointer" onMouseOver="progress.innerHTML=\'GTAV ArabicGuy 1.32 for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'gtavn3\'); return false" style="font-size:25px;text-align:center;color:white">GTAV N3</a>&nbsp;'+
-			'<a href="#" id="ps4debug" class="button pointer" onMouseOver="progress.innerHTML=\'ps4debug for 75X\'"; onmouseout="progress.innerHTML=\'yamicazanova Host for PS4 7.5X FW\'" onclick="toggle_payload(\'ps4debug\'); return false" style="font-size:25px;text-align:center;color:white">ps4debug</a>&nbsp;'+
-			'</td>'+
-			'</tr>'+
-			'<tr><td><br/></td></tr>'+
-			'<tr>'+
-			'<td class="content" >'+
- 	        '<div class="text" >'+
- 	        '<br><span class="yellow" >Designed, Ported and Compiled by :</span >&nbsp;&nbsp; <span class="hue" >yamicazanova Sharifi</span>'+
- 	        '<br><br><br><span class="yellow" >Super Special Thanks To :</span >&nbsp;&nbsp; <a style="font-size:30px;text-align:center;color:white;">Sleirsgoevy , Al Azif , ChendoChap , DarkModderVC , ... </a>'+
-	        '</div>'+
-			'</td>'+
-	        '</tr>'+
-			'<tr>';
-		}
-		
-		window.midExploit = function()
-		{
-			preloadScripts(['exploit.js','jb.js']);
-		}
-
-		window.postExploit = function()
-		{
-			setTimeout(function()
-			{	
-				eval.call(window, scriptCode);
-				done();
-			}, 100);
-
-		};
-		
-		window.postPayload = function()
-		{
-			setTimeout(function()
-			{	
-				eval.call(window, scriptCode);
-				//done();
-			}, 100);
-
-		};
-
-		</script>
-		<script src="utils.js"></script>
-		<script src="int64.js"></script>
-		<script src="ps4.js"></script>
-		<h1 id="progress" class="titlehead">Loading.. Please Wait !!</h1><br>
-		<button style="opacity:0" id="input1" onfocus="handle2()"></button>
-		<button style="opacity:0" id="input2"></button>
-		<button style="opacity:0" id="input3" onfocus="handle2()"></button>
-		<select style="opacity:0" id="select1">
-			<option value="value1">Value1</option>
-		</select>
-		<h1 id="myProgress">
-		  <div id="myBar">0%</div>
-		</h1>
-		<table id="load" align="center" style="width:1200px;margin-top:0px;">
-		</table>
-	</body>
-</html>
+    <br><br>
+    <!--<a href="fix.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='ce-30391-6_fix'"; onmouseout="msgs2.innerHTML='Status'" type="button"><B> CE-30391-6_fix </B></button></a>-->
+    <br><br>
+            <script type="text/javascript">
+              if (localStorage.getItem("theme") == null) {
+                    localStorage.setItem("theme", "1.jpg")
+                }
+                document.getElementById("container").style.background = "url('img/" + localStorage.getItem("theme") + "')"
+                document.getElementById("container").style.backgroundSize = "cover"
+            </script>
+</div>
+    </body>
+    </html>
