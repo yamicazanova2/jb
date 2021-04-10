@@ -1,0 +1,638 @@
+<html manifest="cache.manifest">
+<head>
+  <meta charset="utf-8" />
+  <title>PS4 7.02 Jailbreak</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #website {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: 'top' 'middle' 'bottom';
+    }
+
+    #website > header {
+      grid-area: top;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-style: none none solid;
+      border-width: 1;
+      border-color: gray;
+      background-color: #F0F0F0;
+      padding: 8 5;
+    }
+
+    #website > main {
+      grid-area: middle;
+      overflow: auto;
+      padding: 0 8;
+    }
+
+    #website > footer {
+      grid-area: bottom;
+      border-style: solid none none;
+      border-width: 1;
+      border-color: gray;
+      background-color: #F0F0F0;
+      padding: 8 5;
+    }
+
+    button {
+      font-size: medium;
+      font-weight: bold;
+    }
+
+    .tab {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: white;
+      border-color: gray;
+      border-style: none none solid solid;
+      border-width: 1;
+      box-shadow: -20px 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .tab_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-left: 8;
+      padding-right: 8;
+    }
+
+    .tab_content {
+      padding-left: 8;
+      padding-right: 8;
+    }
+
+    @font-face {
+      font-family: "Courier Prime";
+      font-style: normal;
+      font-weight: 400;
+      src: url("courier-prime-v2-latin-regular.woff");
+    }
+  </style>
+  <script>
+    // Firmware safety check to prevent system lockups
+    var useragent = navigator.userAgent;
+    if (useragent.substring(13,26) === "PlayStation 4") {
+      var firmware = useragent.substring(27,31);
+    } else {
+      alert("You are not using a PS4 to view this website. Do not click on any of the buttons, or your system is likely to freeze.\nThis website is only to be used with a PS4. Proceed at your own risk!");
+    }
+
+    // Check for enabled Cookies
+    if (!(navigator.cookieEnabled)) {
+      document.write(`<span style="position: absolute; left: 8; bottom: 5">Cookies are required for some website functions. Press the OPTIONS button, go to "Settings" and check "Allow Cookies", then refresh the web page.</span>`);
+    }
+  </script>
+</head>
+<body>
+  <noscript><span style="position: absolute; left: 8; bottom: 5; color: Red">JavaScript is required to run the jailbreak. Press the OPTIONS button, go to "Settings" and check "Enable JavaScript", then refresh the web page.</span></noscript>
+  <script src="changelog.js"></script>
+  <div id="website">
+    <header>
+      <span id="title" style="font-size: x-large"><b>PS4 JAILBREAK FOR FIRMWARE 7.02</b></span>
+      <script>
+        if (firmware !== null && firmware.substring(0,3) !== "7.0") {
+          document.getElementById("title").innerHTML += `<span style="color: gray">  Current firmware:  ` + firmware;
+        }
+      </script>
+      <span>
+        <span id="statusbar" style="font-weight: bold"></span>
+        <script>
+          document.getElementById("statusbar").innerHTML = sessionStorage.getItem("last_status");
+          sessionStorage.clear();
+          window.applicationCache.onprogress = function(a) {
+            document.getElementById("statusbar").innerHTML = "New content found. Updating cache: "+(Math.round(100*(a.loaded/a.total)))+"%";
+          }
+          window.applicationCache.oncached = window.applicationCache.onupdateready = function() {
+            sessionStorage.setItem("last_status", "The website has been updated.");
+            window.location.reload();
+          }
+        </script>
+        <button onclick="showTab('tab_changelog')">Changelog</button>
+        <button id="button_jailbreakhistory" style="display: none" onclick="showTab('tab_jailbreakhistory'); loadJailbreakHistory()">Jailbreak history</button>
+        <button onclick="showTab('tab_options')">Settings</button>
+        <script>
+          // Pops a tab
+          function showTab(id) {
+            var i, x;
+            var tab = document.getElementById(id);
+            if (tab.style.display == "block") { // Hide tab if already open
+              tab.style.display = "none";
+            } else { // Hide all other tabs
+              x = document.getElementsByClassName("tab");
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+              }
+              tab.style.display = "block";
+            }
+          }
+        </script>
+      </span>
+    </header>
+    <main style="position: relative">
+      <div id="instructions">
+        <h3>Instructions</h3>
+        <p>This page is now cached in your PS4 browser. You can disconnect your PS4 from the Internet and, from now on, keep using the jailbreak offline. To make this easier, feel free to add a bookmark.</p>
+        <p>To jailbreak, click on the payload that you want to load. Provided everything goes well, in about 20 seconds you will see the message <i>"You're all set!"</i>, followed by <i>"There is not enough free system memory"</i>. Usually though, you will need multiple attempts.</p>
+        <p><b>Several messages can appear:</b>
+          <ul>
+            <li><b>"There is not enough free system memory"</b>: It means the WebKit exploit has failed. Press "OK" to try again. This is normal, as your chances to succeed are about 10%. If you did this for more than 5 minutes without success, reboot and try again.
+            <li><b>"Jailbreak failed! Reboot your PS4 and try again"</b>: In such cases you must reboot, preferably without closing the dialog box. The system might then crash, which looks like an instant power down. If the system crashes, press the power button on the PS4 to turn it on again, then retry.</li>
+            <li><b>"Failed to setup a relative read primitive"</b>: This can happen when you move your controller's analog sticks while the jailbreak is still trying to load. Do not move the analog sticks. After pressing "OK", you can resume jailbreaking without rebooting.</li>
+            <li><b>"You're all set!"</b>: The jailbreak was successful, and the selected payload has been loaded into memory.</li>
+          </ul>
+        </p>
+        <p>Loading a HEN/GoldHEN or Mira payload unlocks installed homebrew applications and enables "debug settings": leave the browser and go to "Settings - *Debug Settings - Game - Package Installer" to install homebrew PKG files from the root folder of an exFAT-formatted USB storage device.
+          <br><b>Once you have enabled debug settings, do not ever go into "*Debug Settings - System - IDU Mode", or your PS4 will brick!</b>
+        </p>
+        <p>You can also send your own payload files from a computer. First, load the "Netcat" payload and wait for it to succeed, in which case the browser's output stops at <i>"[+] Waiting for payload ..."</i>. Then, on your computer, use a Netcat program to send the payload file to the PS4.</p>
+      </div>
+      <div class="tab" id="tab_changelog">
+        <div class="tab_title"><h3>CHANGELOG</h3></div>
+        <div class="tab_content" id="changelog" style="font-family: 'Courier Prime'">
+          <script>
+            // Shows the changelog, replacing newlines with "<br>"
+            document.getElementById("changelog").innerHTML = "<p>" + changes.replace(/\n/g, "<br>") + "</p>";
+          </script>
+        </div>
+      </div>
+      <div class="tab" id="tab_jailbreakhistory">
+        <div class="tab_title"><h3>JAILBREAK HISTORY</h3><span id="tab_jailbreakhistory_stats" style="color: gray"><span></div>
+        <div class="tab_content" id="historylog" style="font-family: 'Courier Prime'">
+        </div>
+      </div>
+      <div class="tab" id="tab_options"> <!-- Checkboxes have the same name as the key they store -->
+        <div class="tab_title"><h3>SETTINGS</h3></div>
+        <div class="tab_content" style="text-align: right">
+          <label for="disable_payload_info">Hide payload descriptions</label>
+            <input type="checkbox" id="disable_payload_info" onclick="togglePayloadInfo()"><br>
+          <label for="disable_youreallset">Disable the "You're all set!" message</label>
+            <input type="checkbox" id="disable_youreallset" onclick="toggleYoureAllSet()"><br>
+          <label for="select_log_level">Log level</label>
+            <select id="select_log_level" onselect="setLogLevel(this.selectedIndex)">
+              <option value="0">0: Disable all logging</option>
+              <option value="1">1: Log during jailbreak</option>
+              <option value="2">2: Enable jailbreak history</option>
+            </select><br><br>
+          <b style="text-align: left">Wallpapers</b>
+          <div style="border-style: solid; border-width: 1; border-color: gray; padding: 8">
+            <label for="enable_wallpaper">Enable wallpaper</label>
+              <input type="checkbox" id="enable_wallpaper" onclick="toggleEnableWallpaper()"><br>
+            <select id="select_wallpaper" onchange="setWallpaper()">
+              <option value="wallpapers/background-image.jpg">Offline: wallpapers/background-image.jpg</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/12/2019-12-11_5df170731fd6a_HomeScreen.png">APEX LEGENDS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/09/PS4Wallpapers.com_59c3dc84e810c_ark-survival-evolved_3840x2160.jpg">ARK SURVIVAL EVOLVED</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a7e2482d3b7c_assassins_creed_4_black_flag_game-hd_wallpapers.jpg">ASSASSINS CREED BLACK FLAG</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/06/PS4Wallpapers.com_5b24cd84d4d7c_e3-2018-how-assassins-creed-odysseys-rpg-focus-redefines-the_wat8.jpg">ASSASSIN'S CREED ODYSSEY FEMALE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/06/PS4Wallpapers.com_5b24c87937e2c_14350.jpg">ASSASSIN'S CREED ODYSSEY MALE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/01/PS4Wallpapers.com_5c3378dc7df6f_000000.png">ASSASSIN'S CREED ODYSSEY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/11/PS4Wallpapers.com_59fdc01e744b2_theVideoGameGallery_37882_1920x1080.jpg">ASSASSIN'S CREED ORIGINS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_AC-UNITY-GANG.jpg">ASSASSIN'S CREED UNITY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/04/2020-04-30_5eab491229c5c_wallpapersden.com_assassins-creed-valhalla-10k_3840x2160.jpg">ASSASSIN'S CREED VALHALLA</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a8038a0d10b0_batman_arkham_city_catwoman_girl_city_airship_black_and_white_19711_1920x1080.jpg">BATMAN ARKHAM CITY CATWOMAN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_Batman-ArkhamKnight.jpg">BATMAN ARKHAM KNIGHT #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a73d52792fee_BatmanArhamKnight.jpg">BATMAN ARKHAM KNIGHT #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a8038e910bf2_Batman_Arkham_Knight_Artwork_1.jpg">BATMAN ARKHAM KNIGHT #3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/07/PS4Wallpapers.com_ss_5ee4fcbcbb90ef477c0b3fb6345117b7f0ce3d5e.1920x1080.jpg">BATMAN ARKHAM KNIGHT HARLEY QUINN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_joker-batman-arkham-origins.jpg">BATMAN JOKER</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/05/PS4Wallpapers.com_5b0967f41a62b_cropped-1920-1080-641193.jpg">BLOODBORNE LADY MARIA</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/09/PS4Wallpapers.com_bloodborne_from_software_coat_arms_hunter_108102_3840x2160.jpg">BLOODBORNE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/09/2019-09-16_5d7fe16a9732d_1004475.jpg">BORDERLANDS 3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_call_of_duty_black_ops_3-3840x2160.jpg">CALL OF DUTY BLACK OPS 3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_call-of-duty-wallpaper-3840-2160.jpg">CALL OF DUTY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/12/PS4Wallpapers.com_5a445854bf10d_23541103.jpg">CODE VEIN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/10/PS4Wallpapers.com_59db9666f0e28_Cuphead-1920x1080.jpg">CUPHEAD</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/07/2020-07-26_5f1d0ae099016_A_mercenary_on_the_rise-1920x1080-EN.png">CYBERPUNK 2077 CITY VIEW</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/07/2020-07-29_5f21ddc53d42b_cyberpunk-2077-fanart-5k-5j-1920x1080.jpg">CYBERPUNK 2077 GIRL #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/06/2019-06-12_5d01212307104_008.jpg">CYBERPUNK 2077 GIRL #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/07/2020-07-29_5f21de1003e63_cyberpunk-2077-cosplay-4k-21-1920x1080.jpg">CYBERPUNK 2077 GIRL #3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/06/2019-06-12_5d012258d78c4_012.jpg">CYBERPUNK 2077 MAIN COVER</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/07/2020-07-29_5f21daf2cc272_cyberpunk-neon-girl-4k-86-1920x1080.jpg">CYBERPUNK 2077 NEON GIRL</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/09/2020-09-07_5f55a78eba47f_thumb-1920-528418.jpg">DARK SOULS 2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_dark_souls_3-1920x1080.jpg">DARK SOULS 3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/08/PS4Wallpapers.com_757535.jpg">DARK SOULS CHIBI CHARACTERS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a80368f0dff4_Best-Game-4K-Wallpaper.jpg">DARK SOULS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/DaysGone.jpg">DAYS GONE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/Death-Stranding.jpg">DEATH STRANDING</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/05/PS4Wallpapers.com_5af16bcf82f16_917823-detroit-3840x2160.jpg">DETROIT BECOME HUMAN #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/05/PS4Wallpapers.com_5af16b7a8e9f8_detroit-feature-2.png">DETROIT BECOME HUMAN #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/05/PS4Wallpapers.com_5af16bfb0d76b_detroit-become-human-artwork-city.jpg">DETROIT BECOME HUMAN #3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a5d65bc5bd78_DyingLight.jpg">DYING LIGHT</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_fallout_new_vegas-1920x1080.jpg">FALLOUT NEW VEGAS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/06/PS4Wallpapers.com_Far_Cry_5_Sinner_3840x2160.jpg">FAR CRY 5 SINNER</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/05/2020-05-02_5ead43cad9f77_cloud-strife-final-fantasy-7-remake-uhdpaper.com-4K-7.70.jpg">FINAL FANTASY 7 REMAKE CLOUD STRIFE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a6578cf411f2_final_fantasy_yuna_x-2_desktop_1920x1080_hd-wallpaper-978446.jpg">FINAL FANTASY X-2 YUNA</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/12/2019-12-09_5deea60c9d79f_FranFinalFantasyXII.jpg">FINAL FANTASY XII FRAN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_ffxv15badasses.jpg">FINAL FANTASY XV #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/06/PS4Wallpapers.com_5b30e9378ee04_GBSSeries-FinalFantasyXV.png">FINAL FANTASY XV #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/08/fortnite-3840x2160.jpg">FORTNITE THE TEAM</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_GRW_HM_1920x1080.jpg">GHOST RECON WILDLANDS #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_GRW_NW_1920x1080.jpg">GHOST RECON WILDLANDS #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/Ghost-Recon-Wildlands-PS4-Wallpaper.jpg">GHOST RECON WILDLANDS LANDSCAPE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/06/PS4Wallpapers.com_god_of_war-3840x2160.jpg">GOD OF WAR</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a76e21880e6e_wallhaven-31498_1920x1080.png">GRAND THEFT AUTO MARIO</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_YoxX2gi.jpg">GRAND THEFT MARIO V</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/02/horizon-zero-dawn-2.jpg">HORIZON ZERO DAWN ALOY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/07/PS4Wallpapers.com_theVideoGameGallery_35388_1920x1080.jpg">HORIZON ZERO DAWN FROZEN WILDS #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/06/PS4Wallpapers.com_horizon_zero_dawn_the_frozen_wilds_2-3840x2160.jpg">HORIZON ZERO DAWN FROZEN WILDS #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/02/horizon-zero-dawn.jpg">HORIZON ZERO DAWN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/03/2020-03-09_5e66c9b62748d_db82utm-e69b22f5-6ade-4d5f-b9c5-78589fdf17b3.jpg">KINGDOM HEARTS STAINED GLASS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/09/PS4Wallpapers.com_5b89bc85d5c99_metro-exodus-3840x2160.jpg">METRO EXODUS #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/12/PS4Wallpapers.com_5a3ec6c8984a5_Metro_Exodus-3840x2160.jpg">METRO EXODUS #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/Middle-earthShadowofMordor-Banishedfromdeath.jpg">MIDDLE-EARTH SHADOW OF MORDOR</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/03/PS4Wallpapers.com_5aa25ec002d56_monster-huntertigrex.jpg">MONSTER HUNTER TIGREX</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/06/PS4Wallpapers.com_Monster_Hunter_World_2_3840x2160.jpg">MONSTER HUNTER WORLD</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_Mortalkombat03Scorpion.jpg">MORTAL KOMBAT</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_mortal_kombat_rain_hero_swords_suit_96465_3840x2160.jpg">MORTAL KOMBAT RAIN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_batman_mortal_kombat_x-HD.png">MORTAL KOMBAT SECRET IDENTITY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/08/PS4Wallpapers.com_Mortalkombatx.jpg">MORTAL KOMBAT X</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/10/2019-10-30_5db961322a89a_stretched-1920-1080-1035119.jpg">NEED FOR SPEED HEAT #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/10/2019-10-29_5db87756c4fe8_1039553.jpg">NEED FOR SPEED HEAT #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/12/2019-12-24_5e01dd11296c4_need_for_speed_heat_lamborghini-wallpaper-1920x1080.jpg">NEED FOR SPEED HEAT #3</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/10/PS4Wallpapers.com_59db94e006a4d_Nioh-Warriors_3840x2160.jpg">NIOH WARRIORS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_nomanssky.jpg">NO MAN'S SKY</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a6f171cc6821_overwatch-all-girl-collage.jpg">OVERWATCH GIRLS</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_persona-5-wallpaper-images-12.png">PERSONA 3-5</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/08/2019-08-28_5d65e85b8edd8_Persona-5-Wallpaper-On-Wallpaper-Hd-9.png">PERSONA 5 #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_persona5-3840x2160-2.png">PERSONA 5 #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a6307ac07576_p5wallps41920x1080.png">PERSONA 5 CAROLINE AND JUSTINE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a63a5bbd65fe_makotonijimawallp.jpg">PERSONA 5 MAKOTO</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_persona-5-3840x2160.jpg">PERSONA 5 SILHOUETTE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2020/01/2020-01-27_5e2eae7f680f9_PersonaMC.png">PERSONA Q2 MC</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2021/04/2021-04-04_606a0d39e733f_PUBG.jpg">PUBG</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2021/02/2021-02-26_6039773bc941a_870910.jpg">RED DEAD REDEMPTION 2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/03/PS4Wallpapers.com_rise-of-the-tomb-raider-3840x2160-20-year-celebration-limited-edition-2474.jpg">RISE OF THE TOMB RAIDER</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_rocket-league.jpg">ROCKET LEAGUE</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/01/PS4Wallpapers.com_5c5350deebc82_sekiro-shadows-die-twice-gx.jpg">SEKIRO SHADOWS DIE TWICE #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/03/PS4Wallpapers.com_5c80fdfb7e65c_youtu.be-Kili_wENUK83.jpg">SEKIRO SHADOWS DIE TWICE #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/04/PS4Wallpapers.com_5ae2c072e20a5_shadow.jpg">SHADOW OF THE TOMB RAIDER</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/06/PS4Wallpapers.com_Spider-Man_PS4_E3_2017_Hero-3840x2160.jpg">SPIDER-MAN HERO</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/08/PS4Wallpapers.com_5b7a2aed40c61_spiderman-ps4-game-5417-hd-1920x1080.jpg">SPIDER-MAN</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/06/PS4Wallpapers.com_5b218f4248e0b_TLOUP2_E32018_1920x1080.jpg">THE LAST OF US PART 2 ELLIE #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/02/tlou2.jpg">THE LAST OF US PART 2 ELLIE #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/06/PS4Wallpapers.com_5b21b5292a906_tlou2-screen-ps4pro-e32018-00004-1528815161-1528915758855.jpg">THE LAST OF US PART 2 ELLIE UNDER CAR</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/01/PS4Wallpapers.com_5a63a6c329036_TLOU-elli-walpaper.jpg">THE LAST OF US PART 2 ELLIE GUITAR #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/02/tlou2-3.jpg">THE LAST OF US PART 2 ELLIE GUITAR #2</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/11/2019-11-16_5dd08a1aca53a_2909061-the-witcher-ciri_game-wallpapers.jpg">THE WITCHER 3 CIRI</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/02/PS4Wallpapers.com_5a80257233330_geralt-yennefer-ciri-play-triss-merigold-art.jpg">THE WITCHER 3 FUN WITH GERALT</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2018/09/PS4Wallpapers.com_5ba86b383a929_geralt_ciri_the_witcher_3_wild_hunt-hd_wallpapers.jpg">THE WITCHER 3 GERALT AND CIRI</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2017/04/PS4Wallpapers.com_wallpaper9.png">THE WITCHER 3 WILD HUNT</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/10/2019-10-29_5db87161a3530_ciri-witcher-digital-art-tg-3840x2160.jpg">THE WITCHER TRISS CLOSEUP #1</option>
+              <option value="https://www.ps4wallpapers.com/wp-content/uploads/2019/10/2019-10-29_5db871939a114_triss-merigold-witcher-3-yz-3840x2160.jpg">THE WITCHER TRISS CLOSEUP #2</option>
+            </select><br>
+            <span style="font-size: small">(Loaded from ps4wallpapers.com)</span><br>
+          </div><br>
+          <b style="text-align: left">Jailbreak history</b>
+          <div style="border-style: solid; border-width: 1; border-color: gray; padding: 8">
+            <label for="disable_jailbreak_history">Hide jailbreak history</label>
+              <input type="checkbox" id="disable_jailbreak_history" onclick="toggleJailbreakHistory()"><br>
+            <label for="select_jailbreak_history_max">Number of lines to display:</label>
+              <select id="select_jailbreak_history_max" onchange="setJailbreakHistoryMax(this.value)">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="100">100</option>
+              </select><br>
+            <button id="clear_jailbreak_history" onclick="clearJailbreakHistory()">Delete jailbreak history data</button>
+          </div><br>
+          <p><button onclick="restoreDefaultSettings()">Restore default settings</button></p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div id="payloadmenu">
+        <div id="payloadinfo" style="display: none; font-weight: bold">Select a payload:</div>
+        <div onmouseout="resetPayloadInfo()">
+          <a href="payload702.html#f=mira702/mira2.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Might not work with some of the latest backports.')"><button>Mira</button></a>
+          <a href="payload702.html#f=hen213.js" onmouseover="showPayloadInfo('Regular HEN. Enables homebrew and debug settings. Might not work with some of the latest backports.')"><button>HEN 2.1.3</button></a>
+          <a href="payload702.html#f=hen213b.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Spoofs the firmware version to 9.99 to run the latest backports.')"><button>HEN 2.1.3b + spoof</button></a>
+          <a href="payload702.html#f=goldhen.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Ignores firmware checks to run the latest backports, provides remote package install, starts an FTP server (port 2121), enables Debug Trophies, and more.')"><button>GoldHEN 1.1</button></a>
+          <a href="payload702.html#f=app2usb.js" onmouseover="showPayloadInfo('Can be used to install PKGs on an exFAT-formatted USB storage device. Temporarily you need enough space on the internal HDD.')"><button>App2USB</button></a>
+          <a href="payload702.html#f=backup.js" onmouseover="showPayloadInfo('Backups databases and all save games to a USB storage device. Can only be restored on the current internal HDD setup, as the files are encrypted.')"><button>Backup</button></a>
+          <a href="payload702.html#f=restore.js" onmouseover="showPayloadInfo('Restores a backup done earlier by the Backup payload.')"><button>Restore</button></a>
+          <a href="payload702.html#f=dumper.js" onmouseover="showPayloadInfo('Load the Dumper payload, then start a game to extract the game and its update to an exFAT-formatted USB storage device. Make sure not to have important data on it.')"><button>Dumper</button></a>
+          <a href="payload702.html#f=disable-updates.js" onmouseover="showPayloadInfo('Creates dummy directories, which survive a reboot, in /update on the internal HDD, preventing the PS4 from starting firmware updates. Note: HEN payloads do this automatically.')"><button>Disable Updates</button></a>
+          <a href="payload702.html#f=enable-updates.js" onmouseover="showPayloadInfo('Removes the directories created by the Disable Updates payload to enable firmware updates once again.')"><button>Enable Updates</button></a>
+          <a href="payload702.html#f=ftp.js" onmouseover="showPayloadInfo('Starts an FTP server that listens on port 1337. On a computer, you can run an FTP client to access the PS4 file tree.')"><button>FTP (port 1337)</button></a>
+          <a href="payload702.html#f=history-blocker.js" onmouseover="showPayloadInfo('Normally, the PS4 browser automatically loads the last used page. This payload turns that feature off/on.')"><button>History Blocker</button></a>
+          <a href="payload702.html#f=kernel-clock.js" onmouseover="showPayloadInfo('Sets the internal secure clock. Can be used to reactivate licences/features.')"><button>Kernel Clock</button></a>
+          <a href="payload702.html#f=kernel-dumper.js" onmouseover="showPayloadInfo('Dumps the kernel to either a USB storage device or a socket that a computer listens on. For developers.')"><button>Kernel Dumper</button></a>
+          <a href="payload702.html#f=linux.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 7 GB of RAM, as 1 GB will be used for graphics.')"><button>Linux (1 GB VRAM)</button></a>
+          <a href="payload702.html#f=linux-3gb.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 5 GB of RAM, as 3 GB will be used for graphics. Do not use the 3 GB payload during installation.')"><button>Linux (3 GB VRAM)</button></a>
+          <a href="payload702.html" onmouseover="showPayloadInfo('Enables you to send additional payload files from a computer.')"><button>Netcat (port 9021)</button></a>
+          <a href="payload702.html#f=ps4debug.js" onmouseover="showPayloadInfo('A debugger for the PS4. Required by some PC applications, e.g. Save Mounter and Offline Account Activator.')"><button>PS4Debug</button></a>
+          <a href="payload702.html#f=rif-renamer.js" onmouseover="showPayloadInfo('Renames fake RIFs to free RIFs for better HEN compatibility.')"><button>RIF Renamer</button></a>
+          <a href="payload702.html#f=todex.js" onmouseover="showPayloadInfo('Spoofs the Target ID to 0x82 (DEX). Useful if you want to use Debug Trophies.')"><button>ToDEX</button></a>
+        </div>
+        <p id="credits" style="color: Gray; font-size: small">Credits: Synacktiv team for the WebKit exploit, @theflow for the kernel exploit, @ChendoChap for HEN 2.1.3, @karo_sharifi for HEN 2.1.3b, SiSTRo for GoldHEN, @dmiller423 for PS4Debug, @zecoxao for ToDEX, &lt;anonymous&gt; for 7.02 module dumps, @tihmstar for 7.02 offsets in the Linux loader, @sleirsgoevy for his 7.02 jailbreak, @Al-Azif for Mira and her payload collection</p>
+      </div>
+    </footer>
+  </div>
+  <div id="version" style="position: absolute; right: 8; bottom: 5; font-size: small; color: gray">
+    <script>
+      // Release info
+      document.getElementById("version").innerHTML = "Release " + date + "#" + build;
+    </script>
+  </div>
+<script>
+/* OPTIONS/SETTINGS INITIALIZATION
+   ------------------------------------------------------------------------- */
+
+// Initialize options when page loads
+initializeOptions();
+applyOptionEnableWallpaper();
+applyOptionHideJailbreakHistory();
+applyOptionHidePayloadInfo();
+
+// Checks or unchecks checkboxes; does nothing more
+function initializeCheckbox(optionName) {
+  var checkbox = document.getElementById(optionName);
+  if (localStorage.getItem(optionName) == 1) {
+    checkbox.checked = true;
+  } else {
+    checkbox.checked = false;
+  }
+}
+
+// Sets all option elements depending on existing localStorage data
+function initializeOptions() {
+  initializeCheckbox("enable_wallpaper");
+  initializeCheckbox("disable_payload_info");
+  initializeCheckbox("disable_youreallset");
+  initializeCheckbox("disable_jailbreak_history");
+  var index, val;
+  // Set log level dropdown menu
+  index = localStorage.getItem("jailbreak_log_level");
+  if (index === null) {
+    document.getElementById("select_log_level").selectedIndex = 2; // Default
+  } else {
+    document.getElementById("select_log_level").selectedIndex = index;
+  }
+  // Set max lines to display in jailbreak history
+  val = localStorage.getItem("jailbreak_history_max");
+  if (val === null) {
+    document.getElementById("select_jailbreak_history_max").value = 20; // Default
+  } else {
+    document.getElementById("select_jailbreak_history_max").value = val;
+  }
+  // Set wallpaper dropdown menu
+  val = localStorage.getItem("wallpaper");
+  if (val === null) {
+    document.getElementById("select_wallpaper").value = "wallpapers/background-image.jpg"; // Default
+  } else {
+    document.getElementById("select_wallpaper").value = val;
+  }
+}
+
+/* OPTIONS/SETTINGS
+   ------------------------------------------------------------------------- */
+
+// Payload info
+
+function showPayloadInfo(text) {
+  document.getElementById("payloadinfo").textContent=text;
+}
+
+function resetPayloadInfo() {
+  document.getElementById("payloadinfo").textContent="Select a payload:";
+}
+
+function applyOptionHidePayloadInfo() {
+  if (localStorage.getItem("disable_payload_info") != "1") {
+    document.getElementById("payloadinfo").style.display = "block";
+  } else {
+    document.getElementById("payloadinfo").style.display = "none";
+  }
+}
+
+function togglePayloadInfo() {
+  if (localStorage.getItem("disable_payload_info") != 1) {
+    localStorage.setItem("disable_payload_info", 1);
+  } else {
+    localStorage.removeItem("disable_payload_info");
+  }
+  applyOptionHidePayloadInfo();
+}
+
+// "You're all set"
+
+function toggleYoureAllSet() {
+  if (localStorage.getItem("disable_youreallset") != 1) {
+    localStorage.setItem("disable_youreallset", "1");
+  } else {
+    localStorage.removeItem("disable_youreallset");
+  }
+}
+
+// Wallpaper
+
+function setWallpaper() {
+  var imageUrl = document.getElementById("select_wallpaper").value;
+  localStorage.setItem("wallpaper", imageUrl);
+  applyOptionEnableWallpaper();
+}
+
+function toggleEnableWallpaper() {
+  if (localStorage.getItem("enable_wallpaper") != 1) {
+    localStorage.setItem("enable_wallpaper", "1");
+  } else {
+    localStorage.removeItem("enable_wallpaper");
+  }
+  applyOptionEnableWallpaper();
+}
+
+function applyOptionEnableWallpaper() {
+  if (localStorage.getItem("enable_wallpaper") == 1) {
+    enableWallpaperMode(document.getElementById("select_wallpaper").value);
+  } else {
+    disableWallpaperMode();
+  }
+}
+
+// Log level
+
+function setLogLevel(index) {
+  if (index == 2) { // Default
+    localStorage.removeItem("jailbreak_log_level");
+  } else {
+    localStorage.setItem("jailbreak_log_level", index);
+  }
+}
+
+// Jailbreak history
+
+function setJailbreakHistoryMax(val) {
+  if (val == 20) { // Default
+    localStorage.removeItem("jailbreak_history_max");
+  } else {
+    localStorage.setItem("jailbreak_history_max", val);
+  }
+}
+
+function clearJailbreakHistory() {
+  var x = confirm("Are you sure you want to delete your jailbreak history data?");
+  if (x == true) {
+    localStorage.removeItem("jailbreak_history");
+    alert("Jailbreak history data has been deleted.");
+  }
+}
+
+function applyOptionHideJailbreakHistory() {
+  if (localStorage.getItem("disable_jailbreak_history") != 1) {
+    document.getElementById("button_jailbreakhistory").style.display = "inline";
+  } else {
+    document.getElementById("button_jailbreakhistory").style.display = "none";
+  }
+}
+
+function toggleJailbreakHistory() {
+  if (localStorage.getItem("disable_jailbreak_history") != 1) {
+    localStorage.setItem("disable_jailbreak_history", "1");
+  } else {
+    localStorage.removeItem("disable_jailbreak_history");
+  }
+  applyOptionHideJailbreakHistory();
+}
+
+// Deletes all saved localStorage items and restores websites' default settings
+function restoreDefaultSettings() {
+  { // Don't touch the jailbreak history, as it has a separate delete button
+    let temp = localStorage.getItem("jailbreak_history");
+    localStorage.clear();
+    localStorage.setItem("jailbreak_history", temp);
+  }
+  initializeOptions();
+  applyOptionEnableWallpaper();
+  applyOptionHidePayloadInfo();
+  applyOptionHideJailbreakHistory();
+}
+
+/* FEATURE IMPLEMENTATIONS
+   ------------------------------------------------------------------------- */
+
+/* JAILBREAK HISTORY
+   ----------------- */
+
+// Puts zeroes in front of numbers
+const zerofy = (number) => String(number).padStart(2, '0');
+
+// Clean up and optionally (if jailbreak history enabled) log orphaned jailbreak attempt
+let startDate = localStorage.getItem("jailbreak_start_date");
+if (startDate !== null) {
+  let logLevel = localStorage.getItem("jailbreak_log_level");
+  if (logLevel === null) { // Means "level 2"
+    let lastDate = localStorage.getItem("jailbreak_last_date");
+    let elapsedTime = (lastDate - startDate);
+    let hours = Math.floor(elapsedTime / 1000 / 60 / 60);
+    let minutes = Math.floor(elapsedTime / 1000 / 60 - hours * 60);
+    let seconds = Math.floor(elapsedTime / 1000 - minutes * 60);
+    let attempts = localStorage.getItem("jailbreak_attempts");
+    let payload = localStorage.getItem("jailbreak_payload");
+    let jailbreak_history = JSON.parse(localStorage.getItem("jailbreak_history"));
+    if (jailbreak_history === null) { jailbreak_history = []; }
+    if (payload === null) { payload = "Netcat"; }
+    let logdate = new Date();
+    var stage = localStorage.getItem("jailbreak_stage");
+    var reason;
+    if (stage == 1) {
+      reason = "Cleanup: kernel exploit failed";
+    } else if (stage == 2) {
+      reason = "Cleanup: no feedback from payload";
+    } else {
+      reason = "Cleanup: jailbreak interrupted";
+    }
+    let historyNewEntry = "[" + logdate.getFullYear() + "-" + zerofy(logdate.getMonth() + 1) + "-" + zerofy(logdate.getDate()) + " " + zerofy(logdate.getHours()) + ":" + zerofy(logdate.getMinutes()) + "] " + reason + ", Payload: " + payload + ", Attempts: " + attempts + ", Time: " + zerofy(hours) + ":" + zerofy(minutes) + ":" + zerofy(seconds);
+    jailbreak_history.unshift(historyNewEntry);
+    localStorage.setItem("jailbreak_history", JSON.stringify(jailbreak_history));
+  }
+  localStorage.removeItem("jailbreak_start_date");
+  localStorage.removeItem("jailbreak_last_date");
+  localStorage.removeItem("jailbreak_attempts");
+  localStorage.removeItem("jailbreak_payload");
+  localStorage.removeItem("jailbreak_state");
+}
+
+// Loads recorded history of previous jailbreak attempts, writing it into the history tab
+function loadJailbreakHistory() {
+  var jailbreak_history = JSON.parse(localStorage.getItem("jailbreak_history"));
+  if (jailbreak_history === null) {
+    jailbreak_history = ["No jailbreaks recorded yet."];
+  } else {
+    // Calculate and output average time
+    var totalCount = 0, totalTime = 0, totalAttempts = 0, attempt, time, hours, minutes, seconds;
+    for (var i = 0; i < jailbreak_history.length; i++) {
+      if (jailbreak_history[i].includes("Kernel exploit successful")) {
+        totalCount++;
+        attempt = jailbreak_history[i].match(/ttempts: .*,/);
+        totalAttempts += parseInt(attempt[0].match(/ [^,]+/));
+        time = jailbreak_history[i].match(/..:..:../);
+        time = time[0];
+        hours = parseInt(time.substr(0, 2));
+        minutes = parseInt(time.substr(3, 2));
+        seconds = parseInt(time.substr(6, 2));
+        totalTime += hours * 60 * 60 + minutes * 60 + seconds;
+      }
+    }
+    if (totalCount > 0) {
+      var averageAttempts = totalAttempts / totalCount;
+      var averageTime = totalTime / totalCount;
+      hours = zerofy(Math.floor(averageTime / 60 / 60));
+      minutes = zerofy(Math.floor(averageTime / 60 - hours * 60));
+      seconds = zerofy(Math.floor(averageTime - minutes * 60));
+      averageTime = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("tab_jailbreakhistory_stats").innerHTML ="Average attempts: " + averageAttempts + ", average time: " + averageTime;
+    }
+  }
+
+  // Print the jailbreak history
+  var max = localStorage.getItem("jailbreak_history_max"); // Apply max lines to show
+  if (max === null) {
+    if (jailbreak_history.length > 20) { jailbreak_history.length = 20; }
+  } else {
+    if (jailbreak_history.length > max) { jailbreak_history.length = max; }
+  }
+  jailbreak_history = jailbreak_history.join("<br>"); // Adding linebreaks
+  document.getElementById("historylog").innerHTML = "<p>" + jailbreak_history + "</p>";
+}
+
+/* WALLPAPERS
+   ---------- */
+
+// Loads a wallpaper and displays it
+function loadWallpaper(imageUrl) {
+  var image = new Image();
+  image.src = imageUrl;
+  image.onerror = function() {
+    disableWallpaperMode();
+  }
+  document.body.style.backgroundImage = "url(" + imageUrl + ")";
+}
+
+// Hides various elements/changes their opacity for optimum wallpaper experience, and sets a wallpaper
+function enableWallpaperMode(imageUrl) {
+  loadWallpaper(imageUrl); // todo: random images
+  document.body.style.backgroundSize = "cover";
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("website").style.opacity = "0.8";
+  document.getElementById("instructions").style.display = "none";
+}
+
+// Removes the wallpaper and resets the website's looks to default
+function disableWallpaperMode() {
+  document.getElementById("instructions").style.display = "block";
+  document.getElementById("website").style.opacity = "1.0";
+  document.getElementById("credits").style.display = "block";
+  document.body.style.backgroundImage = "none";
+}
+</script>
+</body>
+</html>
