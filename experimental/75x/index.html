@@ -1,0 +1,524 @@
+<html manifest="cache.manifest">
+<head>
+  <meta charset="utf-8" />
+  <title>PS4 7.5x Jailbreak</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #website {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: 'top' 'middle' 'bottom';
+    }
+
+    #website > header {
+      grid-area: top;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-style: none none solid;
+      border-width: 1;
+      border-color: gray;
+      background-color: #F0F0F0;
+      padding: 8 5;
+    }
+
+    #website > main {
+      grid-area: middle;
+      overflow: auto;
+      padding: 0 8;
+    }
+
+    #website > footer {
+      grid-area: bottom;
+      border-style: solid none none;
+      border-width: 1;
+      border-color: gray;
+      background-color: #F0F0F0;
+      padding: 8 5;
+    }
+
+    button {
+      font-size: medium;
+      font-weight: bold;
+    }
+
+    .tab {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: white;
+      border-color: gray;
+      border-style: none none solid solid;
+      border-width: 1;
+      box-shadow: -20px 20px 50px rgba(0,0,0,0.2);
+    }
+
+    .tab_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-left: 8;
+      padding-right: 8;
+    }
+
+    .tab_content {
+      padding-left: 8;
+      padding-right: 8;
+    }
+
+    @font-face {
+      font-family: "Courier Prime";
+      font-style: normal;
+      font-weight: 400;
+      src: url("courier-prime-v2-latin-regular.woff");
+    }
+  </style>
+  <script>
+    // Firmware safety check to prevent system lockups
+    var useragent = navigator.userAgent;
+    if (useragent.substring(13,26) === "PlayStation 4") {
+      var firmware = useragent.substring(27,31);
+    } else {
+      alert("You are not using a PS4 to view this website. Do not click on any of the buttons, or your system is likely to freeze.\nThis website is only to be used with a PS4. Proceed at your own risk!");
+    }
+
+    // Check for enabled Cookies
+    if (!(navigator.cookieEnabled)) {
+      document.write(`<span style="position: absolute; left: 8; bottom: 5">Cookies are required for some website functions. Press the OPTIONS button, go to "Settings" and check "Allow Cookies", then refresh the web page.</span>`);
+    }
+  </script>
+</head>
+<body>
+  <noscript><span style="position: absolute; left: 8; bottom: 5; color: Red">JavaScript is required to run the jailbreak. Press the OPTIONS button, go to "Settings" and check "Enable JavaScript", then refresh the web page.</span></noscript>
+  <script src="changelog.js"></script>
+  <div id="website">
+    <header>
+      <span id="title" style="font-size: x-large"><b>PS4 JAILBREAK FOR FIRMWARE 7.5x</b></span>
+      <script>
+        if (firmware !== null && firmware.substring(0,3) !== "7.5") {
+          document.getElementById("title").innerHTML += `<span style="color: gray">  Current firmware:  ` + firmware;
+        }
+      </script>
+      <span>
+        <span id="statusbar" style="font-weight: bold"></span>
+        <script>
+          document.getElementById("statusbar").innerHTML = sessionStorage.getItem("last_status");
+          sessionStorage.clear();
+          window.applicationCache.onprogress = function(a) {
+            document.getElementById("statusbar").innerHTML = "New content found. Updating cache: "+(Math.round(100*(a.loaded/a.total)))+"%";
+          }
+          window.applicationCache.oncached = window.applicationCache.onupdateready = function() {
+            sessionStorage.setItem("last_status", "The website has been updated.");
+            window.location.reload();
+          }
+        </script>
+        <button onclick="showTab('tab_changelog')">Changelog</button>
+        <button id="button_jailbreakhistory" style="display: none" onclick="showTab('tab_jailbreakhistory'); loadJailbreakHistory()">Jailbreak history</button>
+        <button onclick="showTab('tab_options')">Settings</button>
+        <script>
+          // Pops a tab
+          function showTab(id) {
+            var i, x;
+            var tab = document.getElementById(id);
+            if (tab.style.display == "block") { // Hide tab if already open
+              tab.style.display = "none";
+            } else { // Hide all other tabs
+              x = document.getElementsByClassName("tab");
+              for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+              }
+              tab.style.display = "block";
+            }
+          }
+        </script>
+      </span>
+    </header>
+    <main style="position: relative">
+      <div id="instructions">
+        <h3>Instructions</h3>
+        <p>This page is now cached in your PS4 browser. You can disconnect your PS4 from the Internet and, from now on, keep using the jailbreak offline. To make this easier, feel free to add a bookmark.</p>
+        <p>To jailbreak, click on the payload that you want to load. Provided everything goes well, in about 20 seconds you will see the message <i>"You're all set!"</i>, followed by <i>"There is not enough free system memory"</i>. Usually though, you will need multiple attempts.</p>
+        <p><b>Several messages can appear:</b>
+          <ul>
+            <li><b>"There is not enough free system memory"</b>: It means the WebKit exploit has failed. Press "OK" to try again. This is normal, as your chances to succeed are about 10%.
+            <li><b>"Jailbreak failed! Reboot your PS4 and try again"</b>: In such cases you must reboot, preferably without closing the dialog box. The system might then crash, which looks like an instant power down. If the system crashes, press the power button on the PS4 to turn it on again, then retry.</li>
+            <li><b>"Failed to setup a relative read primitive"</b>: This can happen when you move your controller's analog sticks while the jailbreak is still trying to load. Do not move the analog sticks. After pressing "OK", you can resume jailbreaking without rebooting.</li>
+            <li><b>"You're all set!"</b>: The jailbreak was successful, and the selected payload has been loaded into memory.</li>
+          </ul>
+        </p>
+        <p>Loading a HEN/GoldHEN or Mira payload unlocks installed homebrew applications and enables "debug settings": leave the browser and go to "Settings - *Debug Settings - Game - Package Installer" to install homebrew PKG files from the root folder of an exFAT-formatted USB storage device.
+          <br><b>Once you have enabled debug settings, do not ever go into "*Debug Settings - System - IDU Mode", or your PS4 will brick!</b>
+        </p>
+        <p>You can also send your own payload files from a computer. First, load the "Netcat" payload and wait for it to succeed, in which case the browser's output stops at <i>"[+] Waiting for payload ..."</i>. Then, on your computer, use a Netcat program to send the payload file to the PS4.</p>
+      </div>
+      <div class="tab" id="tab_changelog">
+        <div class="tab_title"><h3>CHANGELOG</h3></div>
+        <div class="tab_content" id="changelog" style="font-family: 'Courier Prime'">
+          <script>
+            // Shows the changelog, replacing newlines with "<br>"
+            document.getElementById("changelog").innerHTML = "<p>" + changes.replace(/\n/g, "<br>") + "</p>";
+          </script>
+        </div>
+      </div>
+      <div class="tab" id="tab_jailbreakhistory">
+        <div class="tab_title"><h3>JAILBREAK HISTORY</h3><span id="tab_jailbreakhistory_stats" style="color: gray"><span></div>
+        <div class="tab_content" id="historylog" style="font-family: 'Courier Prime'">
+        </div>
+      </div>
+      <div class="tab" id="tab_options">
+        <div class="tab_title"><h3>SETTINGS</h3></div>
+        <div class="tab_content" style="text-align: right">
+          <p><label for="disable_youreallset">Disable the "You're all set!" message</label>
+            <input type="checkbox" id="disable_youreallset" onclick="toggleYoureAllSet()"></p>
+          <p><label for="enable_wallpaper">Enable wallpaper</label>
+            <input type="checkbox" id="enable_wallpaper" onclick="toggleWallpaper()"></p>
+          <p><label for="disable_payload_info">Hide payload descriptions</label>
+            <input type="checkbox" id="disable_payload_info" onclick="togglePayloadInfo()"></p>
+          <p><label for="select_log_level">Log level:</label>
+            <select id="select_log_level" onclick="setLogLevel(this.selectedIndex)">
+              <option value="0">0: Disable all logging</option>
+              <option value="1">1: Log during jailbreak</option>
+              <option value="2">2: Enable jailbreak history</option>
+            </select></p>
+          <br><b style="text-align: left">Jailbreak history</b>
+          <div style="border-style: solid; border-width: 1; border-color: gray; padding-right: 8; padding-left: 8">
+            <p><label for="disable_jailbreak_history">Hide jailbreak history</label>
+              <input type="checkbox" id="disable_jailbreak_history" onclick="toggleJailbreakHistory()"></p>
+            <p><label for="select_jailbreak_history_max">Number of lines to display:</label>
+              <select id="select_jailbreak_history_max" onchange="setJailbreakHistoryMax(this.value)">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="100">100</option>
+              </select></p>
+            <p><button id="clear_jailbreak_history" onclick="clearJailbreakHistory()">Delete jailbreak history data</button></p>
+          </div>
+          <p><button onclick="restoreDefaultSettings()">Restore default settings</button></p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div id="payloadmenu">
+        <div id="payloadinfo" style="display: none; font-weight: bold">Select a payload:</div>
+        <div onmouseout="resetPayloadInfo()">
+          <a href="payload.html#p0=mira/mira.js&p1=mira/mira2.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Might not work with some of the latest backports.')"><button><font size="3"><b>Mira</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=goldhen-750.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Ignores firmware checks to run the latest backports, provides remote package install, starts an FTP server (port 2121), enables Debug Trophies, and more.')"><button><font size="3"><b>GoldHEN 1.1 (FW 7.50)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=goldhen-751.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Ignores firmware checks to run the latest backports, provides remote package install, starts an FTP server (port 2121), enables Debug Trophies, and more.')"><button><font size="3"><b>GoldHEN 1.1 (FW 7.51)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=goldhen-755.js" onmouseover="showPayloadInfo('Enables homebrew and debug settings. Ignores firmware checks to run the latest backports, provides remote package install, starts an FTP server (port 2121), enables Debug Trophies, and more.')"><button><font size="3"><b>GoldHEN 1.1 (FW 7.55)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=app2usb.js" onmouseover="showPayloadInfo('Can be used to install PKGs on an exFAT-formatted USB storage device. Temporarily you need enough space on the internal HDD.')"><button><font size="3"><b>App2USB</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=backup.js" onmouseover="showPayloadInfo('Backups databases and all save games to a USB storage device. Can only be restored on the current internal HDD setup, as the files are encrypted.')"><button><font size="3"><b>Backup</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=restore.js" onmouseover="showPayloadInfo('Restores a backup done earlier by the Backup payload.')"><button><font size="3"><b>Restore</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=disable-aslr.js" onmouseover="showPayloadInfo('Disables the ASLR (Address Space Layout Randomization) to make working with memory easier/repeatable. For developers.')"><button><font size="3"><b>Disable ASLR</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=disable-update.js" onmouseover="showPayloadInfo('Creates dummy directories, which survive a reboot, in /update on the internal HDD, preventing the PS4 from starting firmware updates. Note: HEN payloads do this automatically.')"><button><font size="3"><b>Disable Updates</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=enable-updates.js" onmouseover="showPayloadInfo('Removes the directories created by the Disable Updates payload to enable firmware updates once again.')"><button><font size="3"><b>Enable Updates</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=dumper.js" onmouseover="showPayloadInfo('Load the Dumper payload, then start a game to extract the game and its update to an exFAT-formatted USB storage device. Make sure not to have important data on it.')"><button><font size="3"><b>Dumper</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=ftp.js" onmouseover="showPayloadInfo('Starts an FTP server that listens on port 1337. On a computer, you can run an FTP client to access the PS4 file tree.')"><button><font size="3"><b>FTP (port 1337)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=history-blocker.js" onmouseover="showPayloadInfo('Normally, the PS4 browser automatically loads the last used page. This payload turns that feature off/on.')"><button><font size="3"><b>History Blocker</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=kernel-clock.js" onmouseover="showPayloadInfo('Sets the internal secure clock. Can be used to reactivate licences/features.')"><button><font size="3"><b>Kernel Clock</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=kernel-dumper.js" onmouseover="showPayloadInfo('Dumps the kernel to either a USB storage device or a socket that a computer listens on. For developers.')"><button><font size="3"><b>Kernel Dumper</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=linux-1gb_sleirsgoevy.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 7 GB of RAM, as 1 GB will be used for graphics.')"><button><font size="3"><b>Linux 1 GB (by sleirsgoevy)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=linux-3gb_sleirsgoevy.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 5 GB of RAM, as 3 GB will be used for graphics. Do not use the 3 GB payload during installation.')"><button><font size="3"><b>Linux 3 GB (by sleirsgoevy)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=linux-1gb_nazky.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 7 GB of RAM, as 1 GB will be used for graphics.')"><button><font size="3"><b>Linux 1 GB (by Nazky)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=linux-3gb_nazky.js" onmouseover="showPayloadInfo('Loads Linux from a prepared USB storage device. Leaves Linux with 5 GB of RAM, as 3 GB will be used for graphics. Do not use the 3 GB payload during installation.')"><button><font size="3"><b>Linux 3 GB (by Nazky)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js" onmouseover="showPayloadInfo('Enables you to send additional payload files from a computer.')"><button><font size="3"><b>Netcat (port 9021)</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=ps4debug.js" onmouseover="showPayloadInfo('A debugger for the PS4. Required by some PC applications, e.g. Save Mounter and Offline Account Activator.')"><button><font size="3"><b>PS4Debug</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=rif-renamer.js" onmouseover="showPayloadInfo('Renames fake RIFs to free RIFs for better HEN compatibility.')"><button><font size="3"><b>RIF Renamer</b></font></button></a>
+          <a href="payload.html#p0=mira/mira.js&p1=todex.js" onmouseover="showPayloadInfo('Spoofs the Target ID to 0x82 (DEX). Useful if you want to use Debug Trophies.')"><button><font size="3"><b>ToDEX</b></font></button></a>
+        </div>
+        <p id="credits" style="color: Gray; font-size: small">Credits: Synacktiv team for the WebKit exploit, @theflow for the kernel exploit, SiSTRo for GoldHEN, @Joonie86 for PS4Debug, @sleirsgoevy, @Nazky &amp; @Cedsaill2 for Linux, &lt;anonymous&gt; for 7.5x kernel dump, @sleirsgoevy for his 7.5x jailbreak, @Al-Azif for Mira and her payload collection</p>
+      </div>
+    </footer>
+  </div>
+  <div id="version" style="position: absolute; right: 8; bottom: 5; font-size: small; color: gray">
+    <script>
+      // Release info
+      document.getElementById("version").innerHTML = "Release " + date + "#" + build;
+    </script>
+  </div>
+<script>
+/* OPTIONS/SETTINGS INITIALIZATION
+   ------------------------------------------------------------------------- */
+
+// Initialize options when page loads
+initializeOptions();
+applyOptionEnableWallpaper();
+applyOptionHideJailbreakHistory();
+applyOptionHidePayloadInfo();
+
+// Checks or unchecks checkboxes; does nothing more
+function initializeCheckbox(optionName) {
+  var checkbox = document.getElementById(optionName);
+  if (localStorage.getItem(optionName) == 1) {
+    checkbox.checked = true;
+  } else {
+    checkbox.checked = false;
+  }
+}
+
+// Sets all option elements depending on existing localStorage data
+function initializeOptions() {
+  initializeCheckbox("enable_wallpaper");
+  initializeCheckbox("disable_payload_info");
+  initializeCheckbox("disable_youreallset");
+  initializeCheckbox("disable_jailbreak_history");
+  var index;
+  index = localStorage.getItem("jailbreak_log_level");
+  if (index === null) {
+    document.getElementById("select_log_level").selectedIndex = 2; // Default
+  } else {
+    document.getElementById("select_log_level").selectedIndex = index;
+  }
+  var val;
+  val = localStorage.getItem("jailbreak_history_max");
+  if (val === null) {
+    document.getElementById("select_jailbreak_history_max").value = 20; // Default
+  } else {
+    document.getElementById("select_jailbreak_history_max").value = val;
+  }
+}
+
+/* OPTIONS/SETTINGS
+   ------------------------------------------------------------------------- */
+
+// Payload info
+
+function showPayloadInfo(text) {
+  document.getElementById("payloadinfo").textContent=text;
+}
+
+function resetPayloadInfo() {
+  document.getElementById("payloadinfo").textContent="Select a payload:";
+}
+
+function applyOptionHidePayloadInfo() {
+  if (localStorage.getItem("disable_payload_info") != "1") {
+    document.getElementById("payloadinfo").style.display = "block";
+  } else {
+    document.getElementById("payloadinfo").style.display = "none";
+  }
+}
+
+function togglePayloadInfo() {
+  if (localStorage.getItem("disable_payload_info") != 1) {
+    localStorage.setItem("disable_payload_info", 1);
+  } else {
+    localStorage.removeItem("disable_payload_info");
+  }
+  applyOptionHidePayloadInfo();
+}
+
+// "You're all set"
+
+function toggleYoureAllSet() {
+  if (localStorage.getItem("disable_youreallset") != 1) {
+    localStorage.setItem("disable_youreallset", "1");
+  } else {
+    localStorage.removeItem("disable_youreallset");
+  }
+}
+
+// Wallpaper
+
+function toggleWallpaper() {
+  if (localStorage.getItem("enable_wallpaper") != 1) {
+    localStorage.setItem("enable_wallpaper", "1");
+    enableWallpaper();
+  } else {
+    localStorage.removeItem("enable_wallpaper");
+    disableWallpaper();
+  }
+}
+
+function applyOptionEnableWallpaper() {
+  if (localStorage.getItem("enable_wallpaper") == 1) {
+    enableWallpaper();
+  } else {
+    disableWallpaper();
+  }
+}
+
+// Log level
+
+function setLogLevel(index) {
+  if (index == 2) { // Default
+    localStorage.removeItem("jailbreak_log_level");
+  } else {
+    localStorage.setItem("jailbreak_log_level", index);
+  }
+}
+
+// Jailbreak history
+
+function setJailbreakHistoryMax(val) {
+  if (val == 20) { // Default
+    localStorage.removeItem("jailbreak_history_max");
+  } else {
+    localStorage.setItem("jailbreak_history_max", val);
+  }
+}
+
+function clearJailbreakHistory() {
+  var x = confirm("Are you sure you want to delete your jailbreak history data?");
+  if (x == true) {
+    localStorage.removeItem("jailbreak_history");
+    alert("Jailbreak history data has been deleted.");
+  }
+}
+
+function applyOptionHideJailbreakHistory() {
+  if (localStorage.getItem("disable_jailbreak_history") != 1) {
+    document.getElementById("button_jailbreakhistory").style.display = "inline";
+  } else {
+    document.getElementById("button_jailbreakhistory").style.display = "none";
+  }
+}
+
+function toggleJailbreakHistory() {
+  if (localStorage.getItem("disable_jailbreak_history") != 1) {
+    localStorage.setItem("disable_jailbreak_history", "1");
+  } else {
+    localStorage.removeItem("disable_jailbreak_history");
+  }
+  applyOptionHideJailbreakHistory();
+}
+
+// Deletes all saved localStorage items and restores websites' default settings
+function restoreDefaultSettings() {
+  { // Don't touch the jailbreak history, as it has a separate delete button
+    let temp = localStorage.getItem("jailbreak_history");
+    localStorage.clear();
+    localStorage.setItem("jailbreak_history", temp);
+  }
+  initializeOptions();
+  applyOptionEnableWallpaper();
+  applyOptionHidePayloadInfo();
+  applyOptionHideJailbreakHistory();
+}
+
+/* FEATURE IMPLEMENTATIONS
+   ------------------------------------------------------------------------- */
+
+/* JAILBREAK HISTORY
+   ----------------- */
+
+// Puts zeroes in front of numbers
+const zerofy = (number) => String(number).padStart(2, '0');
+
+// Clean up and optionally (if jailbreak history enabled) log orphaned jailbreak attempt
+let startDate = localStorage.getItem("jailbreak_start_date");
+if (startDate !== null) {
+  let logLevel = localStorage.getItem("jailbreak_log_level");
+  if (logLevel === null) { // Means "level 2"
+    let lastDate = localStorage.getItem("jailbreak_last_date");
+    let elapsedTime = (lastDate - startDate);
+    let hours = Math.floor(elapsedTime / 1000 / 60 / 60);
+    let minutes = Math.floor(elapsedTime / 1000 / 60 - hours * 60);
+    let seconds = Math.floor(elapsedTime / 1000 - minutes * 60);
+    let attempts = localStorage.getItem("jailbreak_attempts");
+    let payload = localStorage.getItem("jailbreak_payload");
+    let jailbreak_history = JSON.parse(localStorage.getItem("jailbreak_history"));
+    if (jailbreak_history === null) { jailbreak_history = []; }
+    if (payload === null) { payload = "Netcat"; }
+    let logdate = new Date();
+    var stage = localStorage.getItem("jailbreak_stage");
+    var reason;
+    if (stage == 1) {
+      reason = "Cleanup: kernel exploit failed";
+    } else if (stage == 2) {
+      reason = "Cleanup: no feedback from payload";
+    } else {
+      reason = "Cleanup: jailbreak interrupted";
+    }
+    let historyNewEntry = "[" + logdate.getFullYear() + "-" + zerofy(logdate.getMonth() + 1) + "-" + zerofy(logdate.getDate()) + " " + zerofy(logdate.getHours()) + ":" + zerofy(logdate.getMinutes()) + "] " + reason + ", Payload: " + payload + ", Attempts: " + attempts + ", Time: " + zerofy(hours) + ":" + zerofy(minutes) + ":" + zerofy(seconds);
+    jailbreak_history.unshift(historyNewEntry);
+    localStorage.setItem("jailbreak_history", JSON.stringify(jailbreak_history));
+  }
+  localStorage.removeItem("jailbreak_start_date");
+  localStorage.removeItem("jailbreak_last_date");
+  localStorage.removeItem("jailbreak_attempts");
+  localStorage.removeItem("jailbreak_payload");
+  localStorage.removeItem("jailbreak_state");
+}
+
+// Loads recorded history of previous jailbreak attempts, writing it into the history tab
+function loadJailbreakHistory() {
+  var jailbreak_history = JSON.parse(localStorage.getItem("jailbreak_history"));
+  if (jailbreak_history === null) {
+    jailbreak_history = ["No jailbreaks recorded yet."];
+  } else {
+    // Calculate and output average time
+    var totalCount = 0, totalTime = 0, totalAttempts = 0, attempt, time, hours, minutes, seconds;
+    for (var i = 0; i < jailbreak_history.length; i++) {
+      if (jailbreak_history[i].includes("Kernel exploit successful")) {
+        totalCount++;
+        attempt = jailbreak_history[i].match(/ttempts: .*,/);
+        totalAttempts += parseInt(attempt[0].match(/ [^,]+/));
+        time = jailbreak_history[i].match(/..:..:../);
+        time = time[0];
+        hours = parseInt(time.substr(0, 2));
+        minutes = parseInt(time.substr(3, 2));
+        seconds = parseInt(time.substr(6, 2));
+        totalTime += hours * 60 * 60 + minutes * 60 + seconds;
+      }
+    }
+    if (totalCount > 0) {
+      var averageAttempts = totalAttempts / totalCount;
+      var averageTime = totalTime / totalCount;
+      hours = zerofy(Math.floor(averageTime / 60 / 60));
+      minutes = zerofy(Math.floor(averageTime / 60 - hours * 60));
+      seconds = zerofy(Math.floor(averageTime - minutes * 60));
+      averageTime = hours + ":" + minutes + ":" + seconds;
+      document.getElementById("tab_jailbreakhistory_stats").innerHTML ="Average attempts: " + averageAttempts + ", average time: " + averageTime;
+    }
+  }
+
+  // Print the jailbreak history
+  var max = localStorage.getItem("jailbreak_history_max"); // Apply max lines to show
+  if (max === null) {
+    if (jailbreak_history.length > 20) { jailbreak_history.length = 20; }
+  } else {
+    if (jailbreak_history.length > max) { jailbreak_history.length = max; }
+  }
+  jailbreak_history = jailbreak_history.join("<br>"); // Adding linebreaks
+  document.getElementById("historylog").innerHTML = "<p>" + jailbreak_history + "</p>";
+}
+
+/* WALLPAPERS
+   ---------- */
+
+// Selects a wallpaper and sets it
+function selectWallpaper() {
+  var image = new Image();
+  image.src = "wallpapers/background-image.jpg";
+  image.onerror = function() {
+    alert("No wallpaper found.\nThis feature requires self-hosting. Save an image as \"wallpapers/background-image.jpg\" and then try again.");
+    document.getElementById("enable_wallpaper").click();
+  }
+  document.body.style.backgroundImage = 'url("wallpapers/background-image.jpg")';
+}
+
+// Hides various elements/changes their opacity for optimum wallpaper experience, and sets a wallpaper
+function enableWallpaper() {
+  selectWallpaper(); // todo: random images
+  document.body.style.backgroundSize = "cover";
+  buttons = document.querySelectorAll("button");
+  document.getElementById("credits").style.display = "none";
+  document.getElementById("website").style.opacity = "0.8";
+  document.getElementById("instructions").style.display = "none";
+}
+
+// Removes the wallpaper and resets the website's looks to default
+function disableWallpaper() {
+  document.getElementById("instructions").style.display = "block";
+  document.getElementById("website").style.opacity = "1.0";
+  document.getElementById("credits").style.display = "block";
+  document.body.style.backgroundImage = "none";
+}
+</script>
+</body>
+</html>
