@@ -1,9 +1,9 @@
 function die(msg) {
   alert(msg);
   if (logLevel > 1) {
-    saveJailbreakHistory("WebKit exploit failed"); // Function from payload*.html
+    localStorage.setItem("jailbreak_last_date", Date.now());
+    localStorage.setItem("jailbreak_stage", 0);
   }
-  clearJailbreakStorage();
   undefinedFunction();
 }
 

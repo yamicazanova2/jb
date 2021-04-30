@@ -1,1 +1,0 @@
-To use the wallpaper feature, put an image file in this directory and rename the file to "background-image.jpg".

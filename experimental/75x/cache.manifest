@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# random: 156bc495c26c4dcb79239d76809b483b
+# random: d319716673a6356ff5f38cc5df7d2f71
 
 CACHE:
 app2usb.js
@@ -11,31 +11,32 @@ disable-aslr.js
 disable-updates.js
 dumper.js
 enable-updates.js
+frontend.js
 ftp.js
-goldhen-750.js
-goldhen-751.js
-goldhen-755.js
+goldhen-1.0-fw751.js
+goldhen-1.0-fw755.js
+goldhen-1.1-fw750.js
+goldhen-1.1-fw751.js
+goldhen-1.1-fw755.js
+hen213b.js
 history-blocker.js
 index.html
 jb.js
-kernel-clock.js
-kernel-dumper.js
-linux-1gb_nazky.js
-linux-1gb_sleirsgoevy.js
-linux-3gb_nazky.js
-linux-3gb_sleirsgoevy.js
+linux-1gb.js
+linux-3gb.js
 mira/mira2.js
 mira/mira.js
-module-dumper.js
 netcat.js
 payload.html
 ps4debug.js
 restore.js
 rif-renamer.js
 todex.js
+web-activator.js
 webkit-7.50/external/index.html
 webkit-7.50/external/int64.js
 webkit-7.50/external/ps4.js
+webkit-7.50/external/ps4_mod.js
 webkit-7.50/external/utils.js
 
 NETWORK:

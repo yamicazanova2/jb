@@ -8,4 +8,4 @@ let changes=`2021-04-09: Added GoldHEN 1.1.
 2021-03-27: Added firmware safety checks.
 2021-03-26: Added ToDEX payload.`;
 let date="2021-04-09";
-let build="1";
+let build="2";

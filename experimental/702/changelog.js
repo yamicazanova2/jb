@@ -1,4 +1,18 @@
-let changes=`2021-04-09: Added GoldHEN 1.1.
+let changes=`2021-04-29:
+  - Fixed log level option.
+  - Implemented payload styles.
+  - Implemented color schemes.
+  - Added option to switch between WebKit exploits.
+2021-04-27: Wallpaper caching now displays progress.
+2021-04-15: Reworked jailbreak history logging.
+2021-04-13:
+  - Added Web Activator payload.
+  - Added PS4Debug payload by Nazky.
+  - Wallpapers now caching properly.
+2021-04-10: Implemented wallpaper caching.
+2021-04-09:
+  - Added GoldHEN 1.1.
+  - Fixed caching bug.
 2021-04-08: Implemented online wallpapers.
 2021-04-07:
   - Improved logging.
@@ -16,5 +30,5 @@ let changes=`2021-04-09: Added GoldHEN 1.1.
 2021-03-28: Fixed regular HEN payload not being regular HEN.
 2021-03-27: Added firmware safety checks.
 2021-03-26: Added ToDEX payload.`;
-let date="2021-04-09";
+let date="2021-04-29";
 let build="1";

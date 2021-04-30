@@ -2,15 +2,10 @@
 <body onload="go()">
 <script>
   // Global variables
-  var attempts, startDate, hours, minutes, seconds;
-  var logLevel = parseInt(localStorage.getItem("jailbreak_log_level"));
+  var jailbreak_start_date, jailbreak_last_date, jailbreak_attempts,
+    jailbreak_stage, jailbreak_payload, hours, minutes, seconds,
+    logLevel = parseInt(localStorage.getItem("jailbreak_log_level"));
   if (isNaN(logLevel)) { logLevel = 2; }
-
-  // Made payload variable global; will be used in functions "saveJailbreakHistory" and "window.midExploit" in this script, and in function "setupRW" in script "ps4.js"
-  var payload = null;
-
-  // Adds leading zeroes to numbers
-  const zerofy = (number) => String(number).padStart(2, '0');
 
   // Cleans up local storage
   function clearJailbreakStorage() {
@@ -28,8 +23,11 @@
     seconds = Math.floor(time / 1000 - minutes * 60);
   }
 
-  // Saves jailbreak history in local storage; date is an optional string providing the log date in ms
-  function saveJailbreakHistory(reason, time) {
+  // Adds leading zeroes to numbers
+  const zerofy = (number) => String(number).padStart(2, '0');
+
+  // Saves jailbreak history in local storage
+  function saveJailbreakHistory(reason) {
     var jailbreak_history = JSON.parse(localStorage.getItem("jailbreak_history"));
     if (jailbreak_history === null) {
       jailbreak_history = [];
@@ -37,76 +35,81 @@
     if (jailbreak_history.length > 100) {
       jailbreak_history.length = 100;
     }
-    payload = localStorage.getItem("jailbreak_payload");
-    if (payload === null) {
-      payload = "Netcat";
+    jailbreak_payload = localStorage.getItem("jailbreak_payload");
+    if (jailbreak_payload === null) {
+      jailbreak_payload = "Netcat";
     }
-    if (time === null) {
-      convertTime(time);
-    } else {
-      convertTime(Date.now() - startDate);
-    }
-    var logdate = new Date();
-    var historyNewEntry = "[" + logdate.getFullYear() + "-" + zerofy(logdate.getMonth() + 1) + "-" + zerofy(logdate.getDate()) + " " + zerofy(logdate.getHours()) + ":" + zerofy(logdate.getMinutes()) + "] " + reason + ", Payload: " + payload + ", Attempts: " + attempts + ", Time: " + zerofy(hours) + ":" + zerofy(minutes) + ":" + zerofy(seconds);
+    jailbreak_attempts = localStorage.getItem("jailbreak_attempts");
+    jailbreak_start_date = localStorage.getItem("jailbreak_start_date");
+    jailbreak_last_date = localStorage.getItem("jailbreak_last_date");
+    let logDate = new Date(parseInt(jailbreak_last_date));
+    convertTime(jailbreak_last_date - jailbreak_start_date);
+    let historyNewEntry = "[" + logDate.getFullYear() + "-" + zerofy(logDate.getMonth() + 1) + "-" + zerofy(logDate.getDate()) + " " + zerofy(logDate.getHours()) + ":" + zerofy(logDate.getMinutes()) + "] " + reason + ", payload: " + jailbreak_payload + ", attempts: " + jailbreak_attempts + ", time: " + zerofy(hours) + ":" + zerofy(minutes) + ":" + zerofy(seconds);
     jailbreak_history.unshift(historyNewEntry);
     localStorage.setItem("jailbreak_history", JSON.stringify(jailbreak_history));
-    localStorage.setItem("jailbreak_last_date", Date.now());
   }
 
   // Resets all variables to start a new run
   function jailbreakLogInit() {
     clearJailbreakStorage();
-    // Set start date
-    startDate = Date.now();
-    localStorage.setItem("jailbreak_start_date", startDate);
-    // Set last date
-    localStorage.setItem("jailbreak_last_date", startDate);
-    // Set payload
-    var params = getHashParams();
-    if ('p1' in params) {
-      payload = params.p1;
-    } else {
-      payload = null;
+    jailbreak_start_date = Date.now();
+    localStorage.setItem("jailbreak_start_date", jailbreak_start_date);
+    localStorage.setItem("jailbreak_last_date", jailbreak_start_date);
+    jailbreak_payload = location.hash.match(/p1=.+/);
+    if (jailbreak_payload !== null) {
+      jailbreak_payload = jailbreak_payload[0].substr(3);
     }
-    localStorage.setItem("jailbreak_payload", payload);
-    // Set attempts
-    attempts = 1;
-    localStorage.setItem("jailbreak_attempts", attempts);
+    localStorage.setItem("jailbreak_payload", jailbreak_payload);
+    jailbreak_attempts = 1;
+    localStorage.setItem("jailbreak_attempts", jailbreak_attempts);
   }
 
   // Log jailbreak stats
   if (logLevel > 0) {
     {
-      startDate = localStorage.getItem("jailbreak_start_date");
+      jailbreak_start_date = localStorage.getItem("jailbreak_start_date");
       // Handle the first run
-      if (startDate === null) {
+      if (jailbreak_start_date === null) {
         jailbreakLogInit();
+      // Handle previous runs
       } else {
-        lastDate = localStorage.getItem("jailbreak_last_date");
-        attempts = localStorage.getItem("jailbreak_attempts");
-        payload = localStorage.getItem("jailbreak_payload");
-        currentDate = Date.now();
-        var stage = localStorage.getItem("jailbreak_stage");
-        if (stage !== null) {
+        jailbreak_stage = localStorage.getItem("jailbreak_stage");
+        // Handle finished runs
+        if (jailbreak_stage !== null) {
           if (logLevel > 1 ) {
-            if (stage == 1) {
-              saveJailbreakHistory("Cleanup: kernel exploit failed");
-            } else if (stage == 2) {
-              saveJailbreakHistory("Cleanup: no feedback from payload");
+            switch (jailbreak_stage) {
+              case "0":
+                saveJailbreakHistory("WebKit exploit failed");
+                break;
+              case "1":
+                saveJailbreakHistory("Kernel exploit failed");
+                break;
+              case "2":
+                saveJailbreakHistory("Jailbreak successful*");
+                break;
+              case "3":
+                saveJailbreakHistory("Jailbreak successful");
             }
-          }
-          jailbreakLogInit();
-        } else if (currentDate - lastDate > 300000) {
-          // If the last activity is more than 5 minutes ago, assume jailbreak has been interrupted, and reset
-          if (logLevel > 1 ) {
-            saveJailbreakHistory("Cleanup: jailbreak interrupted", lastDate - startDate);
           }
           jailbreakLogInit();
         // Handle subsequent runs
         } else {
-          attempts++;
-          localStorage.setItem("jailbreak_attempts", attempts);
-          localStorage.setItem("jailbreak_last_date", currentDate);
+          let currentDate = Date.now();
+          jailbreak_last_date = localStorage.getItem("jailbreak_last_date");
+          // After 5 minutes, assume interruption
+          if (currentDate - jailbreak_last_date > 300000) {
+            if (logLevel > 1 ) {
+              saveJailbreakHistory("Session interrupted");
+            }
+            jailbreakLogInit();
+          // Continue previous run
+          } else {
+            jailbreak_payload = localStorage.getItem("jailbreak_payload");
+            jailbreak_attempts = localStorage.getItem("jailbreak_attempts");
+            jailbreak_attempts++;
+            localStorage.setItem("jailbreak_attempts", jailbreak_attempts);
+            localStorage.setItem("jailbreak_last_date", currentDate);
+          }
         }
       }
     }
@@ -120,9 +123,9 @@
 
     // Write elapsed time and number of attempts
     if (logLevel > 0) {
-      convertTime(Date.now() - startDate);
+      convertTime(Date.now() - jailbreak_start_date);
       var statistics = document.createElement("span");
-      statistics.innerHTML += "[+] Attempt " + attempts + "<br>";
+      statistics.innerHTML += "[+] Attempt " + jailbreak_attempts + "<br>";
       statistics.innerHTML += "[+] Elapsed time: " + zerofy(hours) + ":" + zerofy(minutes) + ":" + zerofy(seconds) + "<br>";
       logArea.appendChild(statistics);
       let height = logArea.offsetHeight;
@@ -161,27 +164,27 @@
       scripts.push(params.p0);
     }
     if ('p1' in params) {
-      payload = params.p1;
       scripts.push(params.p1);
     }
     scripts.push('netcat.js');
+    if (jailbreak_payload == "web-activator.js") {
+      scripts.push("frontend.js");
+    }
     preloadScripts(scripts, go);
   }
 
   window.postExploit = function() {
-    debug_log("[+] WebKit exploit successful");
-    if (logLevel > 1 ) {
-      saveJailbreakHistory("WebKit exploit successful");
+    if (logLevel > 0 ) {
+      localStorage.setItem("jailbreak_last_date", Date.now());
       localStorage.setItem("jailbreak_stage", 1);
     }
-    if (payload === null) { // Netcat
+    if (jailbreak_payload === null) { // Netcat
       debug_log("[+] Waiting for payload on port 9021 ...");
     } else {
-      debug_log("[+] Running payload \"" + payload + "\" ...");
+      debug_log("[+] Running payload \"" + jailbreak_payload + "\" ...");
     }
     history.pushState({}, '', 'index.html');
-    setTimeout(function() // Update the screen one last time ...
-    {
+    setTimeout(function() {
       eval.call(window, scriptCode);
       done();
     }, 100);
@@ -191,32 +194,32 @@
     if(main_ret == 0 || main_ret == 179) {
       if (localStorage.getItem("disable_youreallset") != 1) {
         if (logLevel > 0) {
-          if (logLevel > 1) {
-            saveJailbreakHistory("Payload delivered");
-          }
-          clearJailbreakStorage();
-          convertTime(Date.now() - startDate);
+          jailbreak_last_date = Date.now();
+          localStorage.setItem("jailbreak_last_date", jailbreak_last_date);
+          localStorage.setItem("jailbreak_stage", 3);
+          convertTime(jailbreak_last_date - jailbreak_start_date);
           alert("You're all set!\n\nIt took " + (hours * 60 + minutes) + " minute" + (minutes == 1 ? "" : "s") + " and " + seconds + " second" + (seconds == 1 ? "" : "s") + ".");
         } else {
           alert("You're all set!");
         }
       }
-      read_ptr_at(0);
-    } else {
-      debug_log("[+] Payload delivery failed");
-      if (logLevel > 0) {
-        if (logLevel > 1) {
-          saveJailbreakHistory("Payload delivery failed");
-        }
-        clearJailbreakStorage();
+      if (jailbreak_payload != "web-activator.js") {
+        read_ptr_at(0);
       }
+    } else {
       alert("Jailbreak failed! Reboot your PS4 and try again.");
     }
   }
 </script>
 <script src="webkit-7.50/external/utils.js"></script>
 <script src="webkit-7.50/external/int64.js"></script>
-<script src="webkit-7.50/external/ps4.js"></script>
+<script>
+if (localStorage.getItem("jailbreak_webkit_exploit") === null) {
+  document.write("<script src=\"webkit-7.50/external/ps4.js\"><\/script>");
+} else {
+  document.write("<script src=\"webkit-7.50/external/ps4_mod.js\"><\/script>");
+}
+</script>
 <button id="input1" onfocus="handle2()" style="opacity: 0"></button>
 <button id="input2" style="opacity: 0"></button>
 <button id="input3" onfocus="handle2()" style="opacity: 0"></button>

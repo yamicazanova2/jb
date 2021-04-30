@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# random: 2276708854a0cf8c74cbb19f9d47c1b7
+# random: e1129e26b928d7e39f733ce465cf9a65
 
 CACHE:
 702.js
@@ -10,7 +10,8 @@ disable-updates.js
 dumper.js
 enable-updates.js
 ftp.js
-goldhen.js
+goldhen-1.0.js
+goldhen-1.1.js
 hen213b.js
 hen213.js
 history-blocker.js

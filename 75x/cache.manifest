@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# random: 9ea3ea20630a3aa0f183f8152856db25
+# random: 198a6ff340ad82a0680d48eaae2f11af
 
 CACHE:
 app2usb.js
@@ -11,9 +11,11 @@ disable-updates.js
 dumper.js
 enable-updates.js
 ftp.js
-goldhen-750.js
-goldhen-751.js
-goldhen-755.js
+goldhen-1.0-fw751.js
+goldhen-1.0-fw755.js
+goldhen-1.1-fw750.js
+goldhen-1.1-fw751.js
+goldhen-1.1-fw755.js
 history-blocker.js
 index.html
 jb.js

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# random: 51be2d1525f59abbc0e9aa1a692952b3
+# random: e78c3815950681a3d3ac4d3aa34e379a
 
 CACHE:
 702.js
@@ -10,29 +10,31 @@ courier-prime-v2-latin-regular.woff
 disable-updates.js
 dumper.js
 enable-updates.js
+frontend.js
 ftp.js
-goldhen.js
+goldhen-1.0.js
+goldhen-1.1.js
 hen213b.js
 hen213.js
 history-blocker.js
 index.html
 jb702/c-code.js
-kernel-clock.js
-kernel-dumper.js
+linux-1gb.js
 linux-3gb.js
-linux.js
 mira702/c-code.js
 mira702/mira2.js
 mira702/mira.js
 payload702.html
-ps4debug.js
+ps4debug_dmiller.js
+ps4debug_nazky.js
 restore.js
 rif-renamer.js
 todex.js
-wallpapers/background-image.jpg
+web-activator.js
 webkit-7.02/external/index.html
 webkit-7.02/external/int64.js
 webkit-7.02/external/ps4.js
+webkit-7.02/external/ps4_mod.js
 webkit-7.02/external/utils.js
 
 NETWORK:
