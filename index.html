@@ -1,100 +1,339 @@
-﻿<html>
-
-  <style>
-body{color: white; background-image:url(1.jpg); background-attachment:fixed; background-size:100%; background-repeat:no-repeat;}
-input{width:25px;height:25px;background-color: transparent;}
-    button {
-                background-color: white;
-                border: 2px solid black;
-                border-radius: 10px;
-                text-align: center;
-    }
-    button:hover {
-                box-shadow: 0 5px 50px 0 white;
-                color: white;
-                border-radius: 10px;
-    }</style>
+<html manifest="offlinexmb.cache">
 <head>
-<meta charset="utf-8">
-<title>Yamicazanova v1.11 for 7.5X FW</title>
-<link rel="stylesheet prefetch" href="Style.css">
-    
+<title>Prb 7.55 Exploit Menu V3IN</title>
+<link rel="stylesheet" href="index.css">
 <script>
-    function showdate() {
-  var dt = new Date();
-    Hour= dt.getHours();
-  Minute= dt.getMinutes();
-     Day=dt.getDate();
-   Month=dt.getMonth()+1;
-   Year=dt.getFullYear();
-if (Minute < 10) { Minute = "0" + Minute; };
-if (Hour < 10) { Hour = "0" + Hour; };
-document.getElementById("date").innerHTML = (Day+"/"+Month+"/"+Year);
-document.getElementById("clock").innerHTML = (Hour+":"+Minute);
-  }
-  
-  setInterval(showdate,0);
+function DLProgress(e){Percent=(Math.round(e.loaded / e.total * 100));window.msgs.innerHTML="Installing Offline Cache: " + Percent + "%"};
+function DisplayCacheProgress(){setTimeout(function(){window.msgs.innerHTML="Cache Installed Successfully";localStorage.isPrbCached=true;},1000);setTimeout(function(){window.msgs.innerHTML="Turn Off the Internet & Reopen to Run the Webkit!!";},3000);}window.applicationCache.addEventListener("progress",DLProgress,false);window.applicationCache.oncached=function(e){DisplayCacheProgress();};window.applicationCache.onupdateready=function(e){DisplayCacheProgress();};
 </script>
-</head>
-<body class="bg-darker">
-<div id="container"  >
-<div id=ScrOverlay class=cacheUPDbg><pre id=cacheUPDtxt class=cacheUPD></pre>
-<div id=CacheProgress><div id=CacheBar></div></div></div>
-<hr><span id="date" ></span><span id="clock" ></span><h1 style='font-size:25px;text-align:center;color:white;'>Yamicazanova v1.11 for 7.5X FW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-<hr>
-<div class="about" ><a href="about.html" >About Us</a></div>
-<div id="myModal" class="modal">
-  <!-- MODAL CONTENTS -->
-  <div class="modal-content">
-  <span class="close"></span>
-    <div class="modal-body">
+<body style="color:white;font-size:20px;text-align:center;" onload="go();" class="bg">
+<h1 id=msgs style='font-size:25px;text-align:center;color:white'>Prb 7.55 Exploit Menu V3</h1>
+<div id=dlog></div>
+<button style=opacity:0 id="input1" onfocus="handle2()"></button>
+<button style=opacity:0 id="input2"></button>
+<button style=opacity:0 id="input3" onfocus="handle2()"></button>
+<select style=opacity:0 id="select1">
+<option value="value1">Value1</option>
+</select>
+<script src="utils.js"></script>
+<script src="int64.js"></script>
+<script src="ps4.js"></script>
+<script>
+function print(){}
 
-    <br><br><br>
-    </div>
-  </div>
+var scriptCode = '';
+
+function preloadScripts(lst){
+for(var i=0;i<lst.length;i++){var xhr=new XMLHttpRequest();xhr.open('GET',lst[i],false);xhr.send('');scriptCode+=xhr.responseText+'\n';}
+}
+
+function done(){
+    if(main_ret == 0 || main_ret == 179)
+    {
+        //alert("You're all set!");
+    }
+    else
+        alert("Jailbreak failed! Reboot your PS4 and try again.");
+}
+
+window.midExploit = function(){
+preloadScripts(['blob.js'], go);
+}
+
+window.postExploit = function(){
+dlog.remove();
+mymenu.style.display="block";
+    setTimeout(function()
+	{
+	eval.call(window, scriptCode);
+	done();
+	}, 100);
+};
+</script>
+<div id=mymenu style="text-align:center;display:none">
+<div text-align= center>Pass = <span id=passCounter></span>&nbsp;&nbsp;:&nbsp;&nbsp;Fail = <span id=failCounter></span></div>
+<div style="width:100%;font-size:20px;color:white">
+PS4 Firmware <span id="PS4fw"></span></div>
+<div style="font-size:15px;color:white">Set Fan Treshold The PS4 default temp is 79°C</div>
+<a href="#" class="button pointer" onMouseOver="msgs.innerHTML='Fan Control Set Temp 50c'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_fancontrol50(); return false" style="font-size:15px;text-align:center;color:#5B90F6">50c</a>&nbsp;
+<a href="#" class="button pointer" onMouseOver="msgs.innerHTML='Fan Control Set Temp 55c'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_fancontrol55(); return false" style="font-size:15px;text-align:center;color:#5B90F6">55c</a>&nbsp;
+<a href="#" class="button pointer" onMouseOver="msgs.innerHTML='Fan Control Set Temp 60c'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_fancontrol60(); return false" style="font-size:15px;text-align:center;color:#ff7f7f">60c</a>&nbsp;
+<a href="#" class="button pointer" onMouseOver="msgs.innerHTML='Fan Control Set Temp 65c'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_fancontrol65(); return false" style="font-size:15px;text-align:center;color:#ff4c4c">65c</a>&nbsp;
+<a href="#" class="button pointer" onMouseOver="msgs.innerHTML='Fan Control Set Temp 70c'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_fancontrol70(); return false" style="font-size:15px;text-align:center;color:#ff4c4c">70c</a>&nbsp;
+<div style='margin-bottom:234px;'></div>
+<button onMouseOver="msgs.innerHTML='New Exploit - By Sleirsgoevy 28th April'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_exploit_new(); return false"><img src="Exploit.png"></button>
+<button onMouseOver="msgs.innerHTML='Old Exploit - By Sleirsgoevy'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_exploit_old(); return false"><img src="Exploit.png"></button>
+<button onMouseOver="msgs.innerHTML='GoldHen - v1.0 By SiSTRo / 7.55 By Joonie86'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_goldhen(); return false"><img src="hen.png"></button>
+<button onMouseOver="msgs.innerHTML='GoldHen - v1.1 By SiSTRo / 7.55 By Joonie86'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_goldhenb(); return false"><img src="hen.png"></button>
+<button onMouseOver="msgs.innerHTML='HenB - v2.1.3 By SiSTRo'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_hen(); return false"><img src="hen.png"></button>
+<button onMouseOver="msgs.innerHTML='Mira2B + Spoof V9.99'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_mira(); return false"><img src="hen.png"></button><br>
+<button onMouseOver="msgs.innerHTML='Binloader'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_binloader(); return false"><img src="binloader.png"></button>
+<button onMouseOver="msgs.innerHTML='Disable-Updates - v1.0 By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_disableupdates(); return false"><img src="disableupdates.png"></button>
+<button onMouseOver="msgs.innerHTML='Enable-Updates - v1.0 By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_enableupdates(); return false"><img src="enableupdates.png"></button>
+<button onMouseOver="msgs.innerHTML='App-2-Usb - Original Version By Stooged / 7.55 Port By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_app2usb(); return false"><img src="app2usb.png"></button>
+<button onMouseOver="msgs.innerHTML='Dump Game Only v1.8 - Original Version By xVortex / 7.55 Port Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_dumper(); return false"><img src="dumper.png"></button>
+<button onMouseOver="msgs.innerHTML='Enable Browser / 7.55 Port Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_enablebrowser(); return false"><img src="enableBrowser.png"></button>
+<button onMouseOver="msgs.innerHTML='Ftp v1.3 - Original Version By xVortex / 7.55 Port By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_ftp(); return false"><img src="ftp.png"></button>
+<button onMouseOver="msgs.innerHTML='History-Blocker - v2.0 Original Version By Stooged / 7.55 Port By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_historyblocker(); return false"><img src="historyBlocker.png"></button>
+<button onMouseOver="msgs.innerHTML='Kernel-Dumper - v1.0 Original Version By Eversion / 7.55 Port By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_kerneldumper(); return false"><img src="kernelDumper.png"></button>
+<button onMouseOver="msgs.innerHTML='Linux 1gb'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_Linux1gb(); return false"><img src="linux.png"></button>
+<button onMouseOver="msgs.innerHTML='Linux 3gb'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_Linux3gb(); return false"><img src="linux.png"></button>
+<button onMouseOver="msgs.innerHTML='Ps4Debug - By ctn 1.5.4.2 Rev2'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_ps4debug(); return false"><img src="debug.png"></button>
+<button onMouseOver="msgs.innerHTML='DB-Backup v1.0 - By Leeful / 7.55 Port By Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_backup(); return false"><img src="backup.png"></button>
+<button onMouseOver="msgs.innerHTML='DB-Restore v1.0 - By Leeful / 7.55 Port Al Azif'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_restore(); return false"><img src="restore.png"></button>
+<button onMouseOver="msgs.innerHTML='Enable-Dex v1.0 - By notzecoxao'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_enabledex(); return false"><img src="enabledex.png"></button>
+<button onMouseOver="msgs.innerHTML='Disable-Dex v1.0 - By Leeful'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_disabledex(); return false"><img src="disabledex.png"></button>
+<button onMouseOver="msgs.innerHTML='WebRTE v1.0 - By PS4 Trainer'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_webrte(); return false"><img src="WebRTE.png"></button>
+<button onMouseOver="msgs.innerHTML='Web-Activator By Sleirsgoevy'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_webactivator(); return false"><img src="webactivator.png"></button><br>    
+<button onMouseOver="msgs.innerHTML='ArabicGuy GTA V v1.00 - Original Version By RF0oDxM0Dz'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'"; onclick="load_gtava1(); return false"><img src="gtav.png"></button>
+<button onMouseOver="msgs.innerHTML='ArabicGuy GTA V v1.27 - Original Version By RF0oDxM0Dz'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_gtava2(); return false"><img src="gtav.png"></button>
+<button onMouseOver="msgs.innerHTML='ArabicGuy GTA V v1.32 - Original Version By RF0oDxM0Dz'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_gtava3(); return false"><img src="gtav.png"></button>
+<button onMouseOver="msgs.innerHTML='Lamance GTA V v1.32 - By david1337hax'"; onmouseout="msgs.innerHTML='Prb 7.55 Exploit Menu V3'" onclick="load_gtavl(); return false"><img src="gtav.png"></button><br>
+<div style="font-size:18px;color:white">Use The PS Button To Exit The Menu.</div>
+<div style="text-align:center;font-size:25px;color:white">Massive Thanks - Leeful - KiiWii - Sleirsgoevy - theflow - Al Azif - Joonie86 - And Many More</div>
+<div style="text-align:center;font-size:20px;color:white">@Prb gbatemp.net</div>
 </div>
 <script>
-var modal = document.getElementById("myModal");
-var span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-span.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+UA = navigator.userAgent.substring(navigator.userAgent.indexOf("0.00 (") + 28, navigator.userAgent.indexOf(") Apple"));
+if (UA == "7.55"){PS4fw.innerHTML="v"+UA+" Detected"};if(UA != "7.55"){PS4fw.innerHTML="Spoofed To v"+UA};
+function getScript(source,callback){var gs=document.createElement('script');gs.src=source;gs.onload=callback;gs.async=false;document.body.appendChild(gs);}
+function loadScript2(){getScript("exp_loaderPL.js",function(){});}
 </script>
-<h1 id=msgs3 style='font-size:25px;text-align:center;color:red;'>WARNING: CURRENT EXPLOIT AND WEB KIT ARE NOT STABLE YET</h1>
+<script>
+if (localStorage.passcount == null) localStorage.passcount=0;
+window.passCounter.innerHTML=localStorage.passcount;
+if (localStorage.failcount == null) localStorage.failcount=0;
+window.failCounter.innerHTML=localStorage.failcount;
 
-<h1 id=msgs4 style='font-size:25px;text-align:center;color:white;'>YOU WILL RECEIVE SOME: THERE'S NOT ENOUGHT MEMORY ALERTS OR MIRA WILL CRASH</h1>
+function load_exploit_new(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading New Exploit Please Wait ...</h1>";
+function getScript(source,callback){var gs=document.createElement('script');gs.src=source;gs.onload=callback;gs.async=false;document.body.appendChild(gs);}
+function loadScript(){getScript("exp_jailbreak_new.js",function(){setTimeout(jailbreak,000);});}loadScript();
+}
 
-<h1 id=msgs5 style='font-size:25px;text-align:center;color:white;'>KEEP TRYING UNTIL YOU GET YOUR PS4 JAILBREAK DONE.</h1>
-<hr>
-<br>
-<h1 id=msgs2 style='font-size:25px;text-align:center;color: yellow;'>STATUS</h1>
-<div style="text-align:center" id="MyItems">
-  <br><br>
-  <h1 style='font-size:30px;text-align:center;text-shadow: 4px 4px 4px black;color:yellow'>CHOOSE YOUR EXPLOIT METHOD</h1>
-  <a href="./Old/index.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Exploit for 7.5X FW OLD EXPLOIT'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> OLD EXPLOIT </B></button></a>
-  <a href="./New/index.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Exploit for 7.5X FW NEW EXPLOIT'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> NEW EXPLOIT </B></button></a>
-  <a href="./Online/index.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='Exploit for 7.5X FW Online NEW EXPLOIT'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> ONLINE </B></button></a>
-  <a href="./Auto/index.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='AUTO Exploit For 7.5X Credits: DarkmodderVC'" ; onmouseout="msgs2.innerHTML='Status'" type="button"><B> AUTO EXPLOIT </B></button></a>
-  
-    <br><br>
-    <!--<a href="fix.html"><button style='font-size:20px;text-align:center;color:#4863A0' class="pointer" onMouseOver="msgs2.innerHTML='ce-30391-6_fix'"; onmouseout="msgs2.innerHTML='Status'" type="button"><B> CE-30391-6_fix </B></button></a>-->
-    <br><br>
-    <br><a style='font-size:20px;text-align:center;color:#FFD700;'>
-            <script type="text/javascript">
-              if (localStorage.getItem("theme") == null) {
-                    localStorage.setItem("theme", "1.jpg")
-                }
-                document.getElementById("container").style.background = "url('img/" + localStorage.getItem("theme") + "')"
-                document.getElementById("container").style.backgroundSize = "cover"
-            </script>
-</div>
-    </body>
-    </html>
+function load_exploit_old(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading old Exploit Please Wait ...</h1>";
+function getScript(source,callback){var gs=document.createElement('script');gs.src=source;gs.onload=callback;gs.async=false;document.body.appendChild(gs);}
+function loadScript(){getScript("exp_jailbreak_old.js",function(){setTimeout(jailbreak,500);});}loadScript();
+}
+
+function load_goldhen(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading GoldHen V1.0 ...</h1>";
+LoadedMSG="GoldHen V1.0 Loaded";
+PLfile = "pl_goldhen_1.0.bin";
+loadScript2();
+}
+
+function load_goldhenb(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading GoldHen V1.1 ...</h1>";
+LoadedMSG="GoldHen V1.1 Loaded";
+PLfile = "pl_goldhen_1.1.bin"
+loadScript2();
+}
+
+function load_hen(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading HenB V2.1.3 ...</h1>";
+LoadedMSG="HenB V2.1.3 Loaded";
+PLfile = "pl_hen.bin"
+loadScript2();
+}
+
+function load_mira(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Mira2b ...</h1>";
+LoadedMSG="Mira2b Loaded";
+PLfile = "pl_mira2b.bin"
+loadScript2();
+}
+
+function load_binloader(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Bin Loader ...";
+LoadedMSG="Send Payload To Port 9021";
+function loadScript(){getScript("exp_loaderBL.js",function(){});}
+loadScript();
+}
+
+function load_disableupdates(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Disable-Updates ...</h1>";
+LoadedMSG="Disable-Updates Loaded";
+PLfile = "pl_disableupdates.bin";
+loadScript2();
+}
+
+function load_enableupdates(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Enable-Updates ...</h1>";
+LoadedMSG="Enable-Updates Loaded";
+PLfile = "pl_disableupdates.bin";
+loadScript2();
+}
+
+function load_backup(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading DBbackup ...</h1>";
+LoadedMSG="DBbackup Loaded";
+PLfile = "pl_backup.bin";
+loadScript2();
+}
+
+function load_app2usb(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading App-To-Usb ...</h1>";
+LoadedMSG="App-To-Usb Loaded";
+PLfile = "pl_app2usb.bin";
+loadScript2();
+}
+
+function load_dumper(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Dumper ...</h1>";
+LoadedMSG="Dumper Loaded";
+PLfile = "pl_dumper.bin";
+loadScript2();
+}
+
+function load_enablebrowser(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Enable-Browser ...</h1>";
+LoadedMSG="Enable-Browser Loaded";
+PLfile = "pl_enablebrowser.bin";
+loadScript2();
+}
+
+function load_ftp(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Ftp ...</h1>";
+LoadedMSG="Ftp Loaded";
+PLfile = "pl_ftp.bin";
+loadScript2();
+}
+
+function load_gtava1(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading ArabicGuy 1.00 ...</h1>";
+LoadedMSG="ArabicGuy 1.00 Loaded";
+PLfile = "pl_gtava1.bin";
+loadScript2();
+}
+
+function load_gtava2(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading ArabicGuy 1.27 ...</h1>";
+LoadedMSG="ArabicGuy 1.27 Loaded";
+PLfile = "pl_gtava2.bin";
+loadScript2();
+}
+
+function load_gtava3(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading ArabicGuy 1.32 ...</h1>";
+LoadedMSG="ArabicGuy 1.32 Loaded";
+PLfile = "pl_gtava3.bin";
+loadScript2();
+}
+
+function load_gtavl(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Lamance 1.32 ...</h1>";
+LoadedMSG="Lamance 1.32 Loaded";
+PLfile = "pl_gtavl.bin";
+loadScript2();
+}
+
+function load_historyblocker(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading History-Blocker ...</h1>";
+LoadedMSG="History-Blocker Loaded";
+PLfile = "pl_historyblocker.bin";
+loadScript2();
+}
+
+function load_kerneldumper(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Kernel-Dumper ...</h1>";
+LoadedMSG="Kernel-Dumper Loaded";
+PLfile = "pl_kerneldumper.bin";
+loadScript2();
+}
+
+function load_Linux1gb(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Linux 1gb ...</h1>";
+LoadedMSG="Linux 1gb Loaded";
+PLfile = "pl_Linux1gb.bin";
+loadScript2();
+}
+
+function load_Linux3gb(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Linux 3gb ...</h1>";
+LoadedMSG="Linux 3gb Loaded";
+PLfile = "pl_Linux3gb.bin";
+loadScript2();
+}
+
+function load_ps4debug(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Ps4-Debug ...</h1>";
+LoadedMSG="Ps4-Debug Loaded";
+PLfile = "pl_ps4debug.bin";
+loadScript2();
+}
+
+function load_restore(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading DB-Restore ...</h1>";
+LoadedMSG="DB-Restore Loaded";
+PLfile = "pl_restore.bin";
+loadScript2();
+}
+
+function load_enabledex(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Enable-Dex ...</h1>";
+LoadedMSG="Enable-Dex Loaded";
+PLfile = "pl_enabledex.bin";
+loadScript2();
+}
+
+function load_disabledex(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Disable-Dex ...</h1>";
+LoadedMSG="Disable-Dex Loaded";
+PLfile = "pl_disabledex.bin";
+loadScript2();
+}
+
+function load_webrte(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading WebRTE ...</h1>";
+LoadedMSG="WebRTE Loaded";
+PLfile = "pl_webrte.bin";
+loadScript2();
+}
+
+function load_webactivator(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Web-Activator ...</h1>";
+LoadedMSG="Web-Activator Loaded";
+PLfile = "pl_webactivator.bin";
+loadScript2();
+}
+
+function load_fancontrol50(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Fan Control 50c ...</h1>";
+LoadedMSG="Fan Control 50c Loaded";
+PLfile = "fan_control/pl_fancontrol50.bin";
+loadScript2();
+}
+
+function load_fancontrol55(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Fan Control 55c ...</h1>";
+LoadedMSG="Fan Control 55c Loaded";
+PLfile = "fan_control/pl_fancontrol55.bin";
+loadScript2();
+}
+
+function load_fancontrol60(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Fan Control 60c ...</h1>";
+LoadedMSG="Fan Control 60c Loaded";
+PLfile = "fan_control/pl_fancontrol60.bin";
+loadScript2();
+}
+
+function load_fancontrol65(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Fan Control 65c ...</h1>";
+LoadedMSG="Fan Control 65c Loaded";
+PLfile = "fan_control/pl_fancontrol65.bin";
+loadScript2();
+}
+
+function load_fancontrol70(){
+msgs.innerHTML="<h1 style='font-size:25px;text-align:center;'>Loading Fan Control 70c ...</h1>";
+LoadedMSG="Fan Control 70c Loaded";
+PLfile = "fan_control/pl_fancontrol70.bin";
+loadScript2();
+}
+
+</script>
+</body>
+</html>
