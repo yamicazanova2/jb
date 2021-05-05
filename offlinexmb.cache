@@ -1,5 +1,5 @@
 CACHE MANIFEST 
-# v1.5.6 X-PROJECT 
+# v3
 # 23/04/2021-16:36:34.59 
 
 app2usb.png
@@ -14,10 +14,12 @@ enableBrowser.png
 enabledex.png
 enableupdates.png
 Exploit.png
+exp_jailbreak.js
 exp_jailbreak_old.js
 exp_jailbreak_new.js
 exp_loaderBL.js
 exp_loaderPL.js
+fakeusb.png
 ftp.png
 gtav.png
 hen.png
@@ -36,6 +38,7 @@ pl_dumper.bin
 pl_enablebrowser.bin
 pl_enabledex.bin
 pl_enableupdates.bin
+pl_fakeusb.bin
 pl_ftp.bin
 pl_goldhen_1.0.bin
 pl_goldhen_1.1.bin
