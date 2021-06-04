@@ -5,7 +5,7 @@
 <body style="background-color:black;color:white;" onload="go()">
 <script>
 if(document.cookie.indexOf('kex=0') >= 0)
-    document.location.href = '../index.html';
+    document.location.href = 'index.html';
 </script>
 <script>
 function print(){}
@@ -34,7 +34,7 @@ function done()
     }
     if(main_ret != 1)
     {
-       alert("PS4 Jailbreak Failed. Fatal-Error Code Returned! Reboot your PS4 and try again.");
+       alert("PS4 Jailbreak Failed. Non-Handled Code Returned! Reboot your PS4 and try again.");
     }
  }
 
@@ -45,6 +45,7 @@ window.midExploit = function()
 
     if (fwFromUA != "755") {
         die('GoldHen 1.0 is not compatible with your firmware version!');
+        window.location.href = "./index.html";
     }
     
     scripts.push('common/loader-755.js');
