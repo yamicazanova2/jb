@@ -1,9 +1,3 @@
-# How to self-host locally
+😎 Crono_Dreambox Host 7.5X 😎
 
-Run a web server in a directory that has an index.html. If you have python3, e.g.:
-
-    python3 -m http.server 7000
-
-Connect from the PS4 by entering
-
-    http://computer-ip:7000
+https://devcrono.github.io/crono_dreambox755/
