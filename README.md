@@ -1,3 +1,3 @@
-😎 Crono_Dreambox Host 7.5X 😎
+# crono_dreambox755v3
 
-https://devcrono.github.io/crono_dreambox755/
+https://devcrono.github.io/crono_dreambox755v3/
