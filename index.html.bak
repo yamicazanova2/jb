@@ -36,7 +36,7 @@ document.cookie = 'kex=1';
 <button class="btn btn-main" onmouseover="mainpayload1()" onmouseout="pagetitle()" onclick=load_mira75x()><img class="icone" src="img/indice.png" /><br> MIRA 7.5x </button>&nbsp;
 <button class="btn btn-main" onmouseover="mainpayload2()" onmouseout="pagetitle()" onclick=load_mira2b()><img class="icone" src="img/indice.png" /><br> MIRA-B </button>&nbsp;
 
-<hr style="width: 50%"><h1 style="color:#00FF12;" >PAYLOADS DISPONBLES</h1><hr style="width: 50%">
+<hr style="width: 50%"><h1 style="color:#00FF12;" >PAYLOADS DISPONIVEIS</h1><hr style="width: 50%">
 
 
 <button class="btn" onmouseover="binloader()" onmouseout="pagetitle()" onclick=load_binloader()> <img class="icone" src="img/binloader.png" /><br> Bin Loader </button>&nbsp;
